@@ -12,6 +12,7 @@
 #include <scheduler.h>
 #include <addrspace.h>
 #include <vnode.h>
+#include <clock.h>
 #include "opt-synchprobs.h"
 
 /* States a thread can be in. */
@@ -58,7 +59,11 @@ thread_create(const char *name)
 	thread->t_vmspace = NULL;
 
 	thread->t_cwd = NULL;
-	
+	thread->secs = 0;
+	thread->nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
+	//thread->start_secs = 0; // TODO: fill this with datetime
+	//thread->start_nsecs = 0;
+	gettime(&(thread->start_secs), &(thread->start_nsecs));
 	// If you add things to the thread structure, be sure to initialize
 	// them here.
 	
@@ -235,7 +240,8 @@ thread_bootstrap(void)
 	/* Initialize the first thread's pcb */
 	md_initpcb0(&me->t_pcb);
 
-	/* Set curthread */
+	/* Set curthread  and set current time*/
+	gettime(&(me->start_secs), &(me->start_nsecs));
 	curthread = me;
 
 	/* Number of threads starts at 1 */
@@ -406,7 +412,21 @@ mi_switch(threadstate_t nextstate)
 	/*
 	 * Stash the current thread on whatever list it's supposed to go on.
 	 * Because we preallocate during thread_fork, this should not fail.
-	 */
+	 * Here we can add code that updates the ran-time. */
+	// here we end the old thread, taking the elapsed time and adding it onto the total
+	// elapsed time. Afterwards, we will update the new thread, updating the new start
+	// time with the current time.
+	time_t* secs, u_int32_t* nsecs;
+	gettime(secs, nsecs);
+	secs_diff = secs-curthread->start_secs;
+	nsecs_diff = nsecs-curthread->start_nsecs;
+
+	curthread->secs += secs_diff;
+	curthread_nsecs += nsecs_diff;
+	if (curthread_nsecs < 0) {
+		curthread->nsecs += 1000000000;
+		curthread->secs--;
+	}
 
 	if (nextstate==S_READY) {
 		result = make_runnable(cur);
@@ -429,6 +449,8 @@ mi_switch(threadstate_t nextstate)
 	 */
 
 	next = scheduler();
+	// put the current time into next right now
+	gettime(&(next->start_secs), &(next->start_nsecs));
 
 	/* update curthread */
 	curthread = next;
