@@ -42,7 +42,7 @@ int sys_waitpid(pid_t* pid, int* status, int options)
 	// we just wait on a semaphore.
 	// is pid_t* the same as threadid?
 	// first find thread with this pid
-	struct thread*  correct_thread = find_correct_thread(pid);
+	struct thread*  correct_thread = find_correct_thread(*pid);
 	if (correct_thread == NULL) return 0;
 	P(correct_thread->wait_sem);
 	return 0;

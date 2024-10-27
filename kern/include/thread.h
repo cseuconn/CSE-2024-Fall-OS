@@ -95,7 +95,7 @@ void thread_sleep(const void *addr);
  * Interrupts must be disabled.
  */
 void thread_wakeup(const void *addr);
-
+void thread_wakeupone(const void* addr);
 /*
  * Return nonzero if there are any threads sleeping on the specified
  * address. Meant only for diagnostic purposes.

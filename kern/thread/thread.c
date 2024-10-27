@@ -61,7 +61,7 @@ thread_create(const char *name)
 	thread->t_vmspace = NULL;
 
 	thread->t_cwd = NULL;
-	thread->wait_sem = sem_create("sem", 1);
+	thread->wait_sem = sem_create("sem", 0);
 	thread->pid = nextpid;
 	nextpid++;
 	//thread->secs = 0;
@@ -507,6 +507,7 @@ thread_exit(void)
 		assert(curthread->t_stack[2] == (char)0xda);
 		assert(curthread->t_stack[3] == (char)0x33);
 	}
+	V(curthread->wait_sem);
 
 	splhigh();
 
@@ -675,13 +676,13 @@ mi_threadstart(void *data1, unsigned long data2,
 
 #if OPT_SYNCHPROBS
 	/* Yield a random number of times to get a good mix of threads */
-	{
+	/*{
 		int i, n;
 		n = random()%161 + random()%161;
 		for (i=0; i<n; i++) {
 			thread_yield();
 		}
-	}
+	}*/
 #endif
 	
 	/* Call the function */
