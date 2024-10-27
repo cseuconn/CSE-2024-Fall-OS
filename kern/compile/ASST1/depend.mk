@@ -304,7 +304,8 @@ thread.o: ../../thread/thread.c ../../include/types.h machine/types.h \
   machine/spl.h machine/pcb.h ../../include/thread.h \
   ../../include/curthread.h ../../include/scheduler.h \
   ../../include/addrspace.h ../../include/vm.h machine/vm.h opt-dumbvm.h \
-  ../../include/vnode.h opt-synchprobs.h
+  ../../include/vnode.h ../../include/clock.h opt-synchprobs.h \
+  ../../include/synch.h opt-synchprobs.h
 main.o: ../../main/main.c ../../include/types.h machine/types.h \
   ../../include/kern/types.h machine/ktypes.h ../../include/kern/errno.h \
   ../../include/kern/unistd.h ../../include/lib.h machine/setjmp.h \

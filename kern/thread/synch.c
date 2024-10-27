@@ -123,12 +123,14 @@ void
 lock_destroy(struct lock *lock)
 {
 	int spl;
+	spl = splhigh();
 	assert(lock != NULL);
+	//spl = splhigh();
 	assert(thread_hassleepers(lock)==0);
-	assert(strcmp(lock->holder, curthread->t_name) == 0);
+	assert(lock_do_i_hold(lock));
 	// add stuff here as needed
 //        assert(sem != NULL);
-        spl = splhigh();
+        //spl = splhigh();
         //assert(thread_hassleepers(lock)==0);
 //        splx(spl);
 

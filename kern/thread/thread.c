@@ -13,6 +13,7 @@
 #include <addrspace.h>
 #include <vnode.h>
 #include <clock.h>
+#include <synch.h>
 #include "opt-synchprobs.h"
 
 /* States a thread can be in. */
@@ -35,6 +36,7 @@ static struct array *zombies;
 /* Total number of outstanding threads. Does not count zombies[]. */
 static int numthreads;
 
+static int nextpid = 0;
 /*
  * Create a thread. This is used both to create the first thread's 
  * thread structure and to create subsequent threads.
@@ -59,11 +61,14 @@ thread_create(const char *name)
 	thread->t_vmspace = NULL;
 
 	thread->t_cwd = NULL;
-	thread->secs = 0;
-	thread->nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
+	thread->wait_sem = sem_create("sem", 1);
+	thread->pid = nextpid;
+	nextpid++;
+	//thread->secs = 0;
+	//thread->nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
 	//thread->start_secs = 0; // TODO: fill this with datetime
 	//thread->start_nsecs = 0;
-	gettime(&(thread->start_secs), &(thread->start_nsecs));
+	//gettime(&(thread->start_secs), &(thread->start_nsecs));
 	// If you add things to the thread structure, be sure to initialize
 	// them here.
 	
@@ -92,7 +97,7 @@ thread_destroy(struct thread *thread)
 	if (thread->t_stack) {
 		kfree(thread->t_stack);
 	}
-
+	sem_destroy(thread->wait_sem);
 	kfree(thread->t_name);
 	kfree(thread);
 }
@@ -241,7 +246,7 @@ thread_bootstrap(void)
 	md_initpcb0(&me->t_pcb);
 
 	/* Set curthread  and set current time*/
-	gettime(&(me->start_secs), &(me->start_nsecs));
+	//gettime(&(me->start_secs), &(me->start_nsecs));
 	curthread = me;
 
 	/* Number of threads starts at 1 */
@@ -357,7 +362,7 @@ thread_fork(const char *name,
 		*ret = newguy;
 	}
 
-	return 0;
+	return (int)newguy->pid; //0;
 
  fail:
 	splx(s);
@@ -416,17 +421,20 @@ mi_switch(threadstate_t nextstate)
 	// here we end the old thread, taking the elapsed time and adding it onto the total
 	// elapsed time. Afterwards, we will update the new thread, updating the new start
 	// time with the current time.
-	time_t* secs, u_int32_t* nsecs;
-	gettime(secs, nsecs);
-	secs_diff = secs-curthread->start_secs;
-	nsecs_diff = nsecs-curthread->start_nsecs;
+	/*time_t secs;
+	u_int32_t nsecs;
+	gettime(&secs, &nsecs);
+	time_t secs_diff;
+	u_int32_t nsecs_diff;
+	getinterval(curthread->start_secs, curthread->start_nsecs, secs, nsecs, &secs_diff, &nsecs_diff);
 
 	curthread->secs += secs_diff;
-	curthread_nsecs += nsecs_diff;
-	if (curthread_nsecs < 0) {
+	curthread->nsecs += nsecs_diff;
+	if (curthread->nsecs < 0) {
 		curthread->nsecs += 1000000000;
 		curthread->secs--;
 	}
+	*/
 
 	if (nextstate==S_READY) {
 		result = make_runnable(cur);
@@ -450,7 +458,7 @@ mi_switch(threadstate_t nextstate)
 
 	next = scheduler();
 	// put the current time into next right now
-	gettime(&(next->start_secs), &(next->start_nsecs));
+	//gettime(&(next->start_secs), &(next->start_nsecs));
 
 	/* update curthread */
 	curthread = next;

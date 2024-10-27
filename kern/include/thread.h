@@ -37,10 +37,12 @@ struct thread {
 	 * and is manipulated by the virtual filesystem (VFS) code.
 	 */
 	struct vnode *t_cwd;
-	time_t secs; // number of seconds that this thread has been alive
-	u_int32_t nsecs; // number of nanoseconds that this thread has been alive
-	time_t start_secs;
-	u_int32_t start_nsecs;
+	pid_t pid;
+	struct semaphore* wait_sem;
+	//time_t secs; // number of seconds that this thread has been alive
+	//u_int32_t nsecs; // number of nanoseconds that this thread has been alive
+	//time_t start_secs;
+	//u_int32_t start_nsecs;
 };
 
 /* Call once during startup to allocate data structures. */

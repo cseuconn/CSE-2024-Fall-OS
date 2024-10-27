@@ -17,7 +17,7 @@
 #include "opt-synchprobs.h"
 #include "opt-sfs.h"
 #include "opt-net.h"
-
+//#include <unistd.h>
 #define _PATH_SHELL "/bin/sh"
 
 #define MAXMENUARGS  16
@@ -109,17 +109,18 @@ common_prog(int nargs, char **args)
 	result = thread_fork(args[0] /* thread name */,
 			args /* thread arg */, nargs /* thread arg */,
 			cmd_progthread, NULL);
-	if (result) {
-		kprintf("thread_fork failed: %s\n", strerror(result));
-		return result;
-	}
+//	if (result) {
+//		kprintf("thread_fork failed: %s\n", strerror(result));
+//		return result;
+//	}
 	
 	/* this function is a bit of a hack that is used to make
 	 * the kernel menu thread wait until the newly-forked
          * thread completes before the menu thread returns */
-	while (!one_thread_only()) {
-	  clocksleep(1);
-	}
+	
+	 // clocksleep(10);
+	int v;
+	sys_waitpid(result, &v, 0);
 
 	return 0;
 }

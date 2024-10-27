@@ -29,5 +29,5 @@ void scheduler_bootstrap(void);
 int scheduler_preallocate(int numthreads);
 void scheduler_killall(void);
 void scheduler_shutdown(void);
-
+struct thread* find_correct_thread(pid_t* pid);
 #endif /* _SCHEDULER_H_ */

@@ -22,7 +22,7 @@ typedef char      int8_t;		/* 8-bit signed integer */
 typedef short     int16_t;		/* 16-bit signed integer */
 typedef int       int32_t;		/* 32-bit signed integer */
 typedef long long int64_t;		/* 64-bit signed integer */
-
+//typedef int pid_t;
 typedef unsigned char      u_int8_t;	/* 8-bit unsigned integer */
 typedef unsigned short     u_int16_t;	/* 16-bit unsigned integer */
 typedef unsigned int       u_int32_t;	/* 32-bit unsigned integer */
