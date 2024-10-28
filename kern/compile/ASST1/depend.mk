@@ -305,7 +305,7 @@ thread.o: ../../thread/thread.c ../../include/types.h machine/types.h \
   ../../include/curthread.h ../../include/scheduler.h \
   ../../include/addrspace.h ../../include/vm.h machine/vm.h opt-dumbvm.h \
   ../../include/vnode.h ../../include/clock.h opt-synchprobs.h \
-  ../../include/synch.h opt-synchprobs.h
+  opt-synchprobs.h
 main.o: ../../main/main.c ../../include/types.h machine/types.h \
   ../../include/kern/types.h machine/ktypes.h ../../include/kern/errno.h \
   ../../include/kern/unistd.h ../../include/lib.h machine/setjmp.h \
@@ -370,7 +370,7 @@ synchtest.o: ../../test/synchtest.c ../../include/types.h machine/types.h \
   ../../include/kern/types.h machine/ktypes.h ../../include/lib.h \
   machine/setjmp.h ../../include/synch.h ../../include/thread.h \
   machine/pcb.h ../../include/test.h ../../include/clock.h \
-  opt-synchprobs.h
+  opt-synchprobs.h ../../include/curthread.h
 malloctest.o: ../../test/malloctest.c ../../include/types.h \
   machine/types.h ../../include/kern/types.h machine/ktypes.h \
   ../../include/lib.h machine/setjmp.h ../../include/synch.h \

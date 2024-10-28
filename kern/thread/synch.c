@@ -77,7 +77,6 @@ P(struct semaphore *sem)
 	while (sem->count==0) {
 		thread_sleep(sem);
 	}
-//	kprintf("%d\n", sem->count);
 	assert(sem->count>0);
 	sem->count--;
 	splx(spl);
@@ -124,19 +123,12 @@ void
 lock_destroy(struct lock *lock)
 {
 	int spl;
-	spl = splhigh();
 	assert(lock != NULL);
-	//spl = splhigh();
+	spl = splhigh();
 	assert(thread_hassleepers(lock)==0);
 	assert(lock_do_i_hold(lock));
-	// add stuff here as needed
-//        assert(sem != NULL);
-        //spl = splhigh();
-        //assert(thread_hassleepers(lock)==0);
-//        splx(spl);
 
 	kfree(lock->name);
-	//kfree(lock->holder);
 	kfree(lock);
 	splx(spl);
 }

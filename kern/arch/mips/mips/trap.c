@@ -79,7 +79,6 @@ mips_trap(struct trapframe *tf)
 
 	/* Make sure we haven't run off our stack */
 	if (curthread != NULL && curthread->t_stack != NULL) {
-		kprintf("%d %d\n", tf, curthread->t_stack);
 		assert((vaddr_t)tf > (vaddr_t)curthread->t_stack);
 		assert((vaddr_t)tf < (vaddr_t)(curthread->t_stack+STACK_SIZE));
 	}

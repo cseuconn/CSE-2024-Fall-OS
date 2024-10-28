@@ -138,18 +138,3 @@ print_run_queue(void)
 	
 	splx(spl);
 }
-
-struct thread* find_correct_thread(pid_t pid)
-{
-	// iterate through until you find the right one
-	int spl = splhigh();
-	int i, k=0;
-	i = q_getstart(runqueue);
-	while (i != q_getend(runqueue)) {
-		struct thread* t = q_getguy(runqueue, i);
-		if (t->pid == pid) {splx(spl); return t;}
-	}
-	// no such process; we don't need to wait
-	splx(spl);
-	return NULL;
-}

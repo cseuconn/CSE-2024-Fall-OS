@@ -8,7 +8,7 @@
 #include <thread.h>
 #include <test.h>
 #include <clock.h>
-
+#include <curthread.h>
 #define NSEMLOOPS     63
 #define NLOCKLOOPS    120
 #define NCVLOOPS      5
@@ -158,7 +158,9 @@ locktestthread(void *junk, unsigned long num)
 		}
 
 		lock_release(testlock);
+		//kprintf("%d %d\n", curthread->secs, curthread->nsecs);
 	}
+	kprintf("%d %d %d\n", curthread->secs, curthread->nsecs, curthread->pid);
 	V(donesem);
 }
 

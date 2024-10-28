@@ -13,7 +13,6 @@
 #include <addrspace.h>
 #include <vnode.h>
 #include <clock.h>
-#include <synch.h>
 #include "opt-synchprobs.h"
 
 /* States a thread can be in. */
@@ -35,8 +34,7 @@ static struct array *zombies;
 
 /* Total number of outstanding threads. Does not count zombies[]. */
 static int numthreads;
-
-static int nextpid = 0;
+static int next_pid = 0;
 /*
  * Create a thread. This is used both to create the first thread's 
  * thread structure and to create subsequent threads.
@@ -61,14 +59,23 @@ thread_create(const char *name)
 	thread->t_vmspace = NULL;
 
 	thread->t_cwd = NULL;
-	thread->wait_sem = sem_create("sem", 0);
-	thread->pid = nextpid;
-	nextpid++;
-	//thread->secs = 0;
-	//thread->nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
-	//thread->start_secs = 0; // TODO: fill this with datetime
-	//thread->start_nsecs = 0;
-	//gettime(&(thread->start_secs), &(thread->start_nsecs));
+	thread->secs = 0;
+	thread->nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
+	/* if the clock is not initialized, then we fill this with a magic number
+	 * turn interrupts off before setting thread pid */
+	//spl = splx()
+	int s = splhigh();
+	thread->pid = next_pid;
+	next_pid++;
+	splx(s);
+
+	if (thread->pid == 0) {
+		// if we're the first process fill with dummy values
+		thread->start_secs = -1;
+		thread->start_nsecs = -1;
+	}
+
+	else gettime(&(thread->start_secs), &(thread->start_nsecs));
 	// If you add things to the thread structure, be sure to initialize
 	// them here.
 	
@@ -97,7 +104,7 @@ thread_destroy(struct thread *thread)
 	if (thread->t_stack) {
 		kfree(thread->t_stack);
 	}
-	sem_destroy(thread->wait_sem);
+
 	kfree(thread->t_name);
 	kfree(thread);
 }
@@ -362,7 +369,7 @@ thread_fork(const char *name,
 		*ret = newguy;
 	}
 
-	return (int)newguy->pid; //0;
+	return 0;
 
  fail:
 	splx(s);
@@ -421,20 +428,26 @@ mi_switch(threadstate_t nextstate)
 	// here we end the old thread, taking the elapsed time and adding it onto the total
 	// elapsed time. Afterwards, we will update the new thread, updating the new start
 	// time with the current time.
-	/*time_t secs;
+	time_t secs;
 	u_int32_t nsecs;
-	gettime(&secs, &nsecs);
 	time_t secs_diff;
 	u_int32_t nsecs_diff;
-	getinterval(curthread->start_secs, curthread->start_nsecs, secs, nsecs, &secs_diff, &nsecs_diff);
-
-	curthread->secs += secs_diff;
-	curthread->nsecs += nsecs_diff;
-	if (curthread->nsecs < 0) {
-		curthread->nsecs += 1000000000;
-		curthread->secs--;
+	gettime(&secs, &nsecs);
+	if (cur->pid == 0 && cur->start_secs == -1 && cur->start_nsecs == -1) {
+		/* first time updating the init thread */
+		gettime(&(cur->start_secs), &(cur->start_nsecs));
 	}
-	*/
+
+	else {
+		getinterval(cur->start_secs, cur->start_nsecs, secs, nsecs, &secs_diff, &nsecs_diff);
+
+		cur->secs += secs_diff;
+		cur->nsecs += nsecs_diff;
+		if (cur->nsecs < 0) {
+			cur->nsecs += 1000000000;
+			cur->secs--;
+		}
+	}
 
 	if (nextstate==S_READY) {
 		result = make_runnable(cur);
@@ -458,7 +471,7 @@ mi_switch(threadstate_t nextstate)
 
 	next = scheduler();
 	// put the current time into next right now
-	//gettime(&(next->start_secs), &(next->start_nsecs));
+	gettime(&(next->start_secs), &(next->start_nsecs));
 
 	/* update curthread */
 	curthread = next;
@@ -507,7 +520,6 @@ thread_exit(void)
 		assert(curthread->t_stack[2] == (char)0xda);
 		assert(curthread->t_stack[3] == (char)0x33);
 	}
-	V(curthread->wait_sem);
 
 	splhigh();
 
@@ -676,13 +688,13 @@ mi_threadstart(void *data1, unsigned long data2,
 
 #if OPT_SYNCHPROBS
 	/* Yield a random number of times to get a good mix of threads */
-	/*{
+	{
 		int i, n;
 		n = random()%161 + random()%161;
 		for (i=0; i<n; i++) {
 			thread_yield();
 		}
-	}*/
+	}
 #endif
 	
 	/* Call the function */
