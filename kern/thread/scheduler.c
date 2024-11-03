@@ -11,14 +11,14 @@
 #include <thread.h>
 #include <machine/spl.h>
 #include <queue.h>
-
+#include <rbtree.h>
 /*
  *  Scheduler data
  */
 
 // Queue of runnable threads
 static struct queue *runqueue;
-
+struct rbNode* root = NULL; //static struct rbNode* root;
 /*
  * Setup function
  */
@@ -100,7 +100,8 @@ scheduler(void)
 	// prohibitive.
 	// 
 	//print_run_queue();
-	
+	deletion(leftmost(root)->data);
+	//inorderTraversal(root);
 	return q_remhead(runqueue);
 }
 
@@ -113,7 +114,8 @@ make_runnable(struct thread *t)
 {
 	// meant to be called with interrupts off
 	assert(curspl>0);
-
+	insertion(t);
+	//inorderTraversal(root);
 	return q_addtail(runqueue, t);
 }
 
