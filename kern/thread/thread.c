@@ -14,7 +14,7 @@
 #include <vnode.h>
 #include <clock.h>
 #include "opt-synchprobs.h"
-
+#include <rbtree.h>
 /* States a thread can be in. */
 typedef enum {
 	S_RUN,
@@ -507,6 +507,7 @@ mi_switch(threadstate_t nextstate)
 void
 thread_exit(void)
 {
+	deletion(curthread);
 	if (curthread->t_stack != NULL) {
 		/*
 		 * Check the magic number we put on the bottom end of
@@ -690,7 +691,7 @@ mi_threadstart(void *data1, unsigned long data2,
 	/* Yield a random number of times to get a good mix of threads */
 	{
 		int i, n;
-		n = random()%161 + random()%161;
+		n = random()%2 + random()%2 + 1;
 		for (i=0; i<n; i++) {
 			thread_yield();
 		}

@@ -12,7 +12,7 @@ enum nodeColor {
 };
 
 int thread_cmp(struct thread* t1, struct thread* t2){
-    if (t1->secs == t2->secs && t1->nsecs == t2->nsecs) return 0;
+    if (t1->secs == t2->secs && t1->nsecs == t2->nsecs) return t2 > t1 ? 1 : -1;
     else if (t1->secs > t2->secs || (t1->secs == t2->secs && t1->nsecs > t2->nsecs)) return -1;
     else return 1;
 }
@@ -53,7 +53,7 @@ void insertion(struct thread* data) {
       //kprintf("Duplicates Not Allowed!!\n");
       //return;
     //}
-    index = cmp >= 0 ? 1 : 0;
+    index = cmp > 0 ? 1 : 0;
     stack[ht] = ptr;
     ptr = ptr->link[index];
     dir[ht++] = index;
@@ -139,11 +139,14 @@ void deletion(struct thread* data) {
     if (ptr->data == data)
       break;
     int cmp = thread_cmp(ptr->data, data);
-    diff = cmp >= 0 ? 1 : 0;
+    diff = cmp > 0 ? 1 : 0;
     stack[ht] = ptr;
     dir[ht++] = diff;
     ptr = ptr->link[diff];
   }
+  // if we don't find it there, return w/o doing anyting
+  if (ptr == NULL) return;
+  if (ptr->data != data) return;
 
   if (ptr->link[1] == NULL) {
     if ((ptr == root) && (ptr->link[0] == NULL)) {

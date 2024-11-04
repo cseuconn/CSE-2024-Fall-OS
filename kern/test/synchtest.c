@@ -9,6 +9,7 @@
 #include <test.h>
 #include <clock.h>
 #include <curthread.h>
+#include <rbtree.h>
 #define NSEMLOOPS     63
 #define NLOCKLOOPS    120
 #define NCVLOOPS      5
@@ -126,7 +127,7 @@ locktestthread(void *junk, unsigned long num)
 {
 	int i;
 	(void)junk;
-
+	int j;
 	for (i=0; i<NLOCKLOOPS; i++) {
 		lock_acquire(testlock);
 		testval1 = num;
@@ -160,7 +161,10 @@ locktestthread(void *junk, unsigned long num)
 		lock_release(testlock);
 		//kprintf("%d %d\n", curthread->secs, curthread->nsecs);
 	}
+	for (j = 0; j < 100000; j++){}
+	//kprintf("A");
 	kprintf("%d %d %d\n", curthread->secs, curthread->nsecs, curthread->pid);
+	//inorderTraversal(root);
 	V(donesem);
 }
 
