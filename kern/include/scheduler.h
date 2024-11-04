@@ -17,6 +17,10 @@
  *     scheduler_preallocate - ensure space for at least NUMTHREADS threads.
  *                           Returns an error code.
  */
+enum schedulerType {
+  ROUND_ROBIN,
+  CFS
+};
 
 struct thread;
 

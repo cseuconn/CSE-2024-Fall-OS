@@ -12,6 +12,7 @@
 #include <machine/spl.h>
 #include <queue.h>
 #include <rbtree.h>
+#define SCHEDULER CFS
 /*
  *  Scheduler data
  */
@@ -90,7 +91,7 @@ scheduler(void)
 	// meant to be called with interrupts off
 	assert(curspl>0);
 	
-	while (q_empty(runqueue)) {
+	while (root == NULL) {
 		cpu_idle();
 	}
 
@@ -100,9 +101,12 @@ scheduler(void)
 	// prohibitive.
 	// 
 	//print_run_queue();
+	struct thread* next = leftmost(root)->data;
 	deletion(leftmost(root)->data);
+	q_remhead(runqueue);
+	return next;
 	//inorderTraversal(root);
-	return q_remhead(runqueue);
+	//return q_remhead(runqueue);
 }
 
 /* 
