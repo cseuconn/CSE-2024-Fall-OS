@@ -1,5 +1,5 @@
-#ifndef _SCHEDULER_H_
-#define _SCHEDULER_H_
+#ifndef _SCHEDULER_RR_H_
+#define _SCHEDULER_RR_H_
 
 /*
  * Scheduler-related function calls.
@@ -17,21 +17,23 @@
  *     scheduler_preallocate - ensure space for at least NUMTHREADS threads.
  *                           Returns an error code.
  */
-enum schedulerType {
-  RR,
-  CFS
-};
-
 struct thread;
+extern struct queue* runqueue;
+struct thread *scheduler_rr(void);
+int make_runnable_rr(struct thread *t);
 
-struct thread *scheduler(void);
-int make_runnable(struct thread *t);
+void print_run_queue_rr(void);
 
-void print_run_queue(void);
-
-void scheduler_bootstrap(void);
-int scheduler_preallocate(int numthreads);
-void scheduler_killall(void);
-void scheduler_shutdown(void);
-
+void scheduler_bootstrap_rr(void);
+int scheduler_preallocate_rr(int numthreads);
+void scheduler_killall_rr(void);
+void scheduler_shutdown_rr(void);
+void print_run_queue_rr(void);
 #endif /* _SCHEDULER_H_ */
+
+
+
+
+
+
+

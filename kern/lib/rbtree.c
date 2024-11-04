@@ -23,7 +23,7 @@ int thread_cmp(struct thread* t1, struct thread* t2){
 //  struct rbNode *link[2];
 //};
 
-extern struct rbNode *root; // = NULL;
+//extern struct rbNode *root; // = NULL;
 
 // Create a red-black tree
 struct rbNode *createNode(struct thread* data) {

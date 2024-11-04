@@ -11,7 +11,7 @@ struct rbNode {
 };
 
 //struct rbNode;
-//extern struct rbNode* root;
+extern struct rbNode* root;
 int thread_cmp(struct thread* t1, struct thread* t2);
 struct rbNode *createNode(struct thread* data);
 void insertion(struct thread* data);

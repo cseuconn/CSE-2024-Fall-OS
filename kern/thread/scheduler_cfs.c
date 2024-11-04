@@ -8,30 +8,22 @@
 #include <types.h>
 #include <lib.h>
 #include <scheduler.h>
-#include <scheduler_rr.h>
-#include <scheduler_cfs.h>
 #include <thread.h>
 #include <machine/spl.h>
-#include <queue.h>
+#include <scheduler_cfs.h>
 #include <rbtree.h>
+#define SCHEDULER CFS
 /*
  *  Scheduler data
  */
-#define SCHEDULER CFS
 // Queue of runnable threads
 //static struct queue *runqueue;
-struct rbNode* root = NULL; //static struct rbNode* root;
-struct queue* runqueue = NULL;
+//struct rbNode* root = NULL; //static struct rbNode* root;
 /*
  * Setup function
  */
 void
-scheduler_bootstrap(void)
-{
-	if (SCHEDULER == CFS) scheduler_bootstrap_cfs();
-	else scheduler_bootstrap_rr();
-
-}
+scheduler_bootstrap_cfs(void) {}
 
 /*
  * Ensure space for handling at least NTHREADS threads.
@@ -41,12 +33,7 @@ scheduler_bootstrap(void)
  * do nothing.
  */
 int
-scheduler_preallocate(int nthreads)
-{
-        if (SCHEDULER == CFS) return scheduler_preallocate_cfs(nthreads);
-        else return scheduler_preallocate_rr(nthreads);
-
-}
+scheduler_preallocate_cfs(int nthreads) { return 0; }
 
 /*
  * This is called during panic shutdown to dispose of threads other
@@ -55,10 +42,14 @@ scheduler_preallocate(int nthreads)
  * really matter, and freeing everything might cause further panics.
  */
 void
-scheduler_killall(void)
+scheduler_killall_cfs(void)
 {
-	if (SCHEDULER == CFS) scheduler_killall_cfs();
-	else scheduler_killall_rr();
+	assert(curspl>0);
+	while (root != NULL) {
+		struct thread *t = root->data; //q_remhead(runqueue);
+		kprintf("scheduler: Dropping thread %s.\n", t->t_name);
+		deletion(root->data);
+	}
 }
 
 /*
@@ -69,11 +60,13 @@ scheduler_killall(void)
  * ordinary shutdown, normally it should be.
  */
 void
-scheduler_shutdown(void)
+scheduler_shutdown_cfs(void)
 {
-        if (SCHEDULER == CFS) scheduler_shutdown_cfs();
-        else scheduler_shutdown_rr();
+	scheduler_killall();
 
+	assert(curspl>0);
+	//q_destroy(runqueue);
+	root = NULL;
 }
 
 /*
@@ -83,11 +76,27 @@ scheduler_shutdown(void)
  * wake it up are going to make a thread runnable or not.) 
  */
 struct thread *
-scheduler(void)
+scheduler_cfs(void)
 {
 	// meant to be called with interrupts off
-        if (SCHEDULER == CFS) return scheduler_cfs();
-        else return scheduler_rr();
+	assert(curspl>0);
+	
+	while (root == NULL) {
+		cpu_idle();
+	}
+
+	// You can actually uncomment this to see what the scheduler's
+	// doing - even this deep inside thread code, the console
+	// still works. However, the amount of text printed is
+	// prohibitive.
+	// 
+	//print_run_queue();
+	struct thread* next = leftmost(root)->data;
+	deletion(leftmost(root)->data);
+	//q_remhead(runqueue);
+	return next;
+	//inorderTraversal(root);
+	//return q_remhead(runqueue);
 }
 
 /* 
@@ -95,22 +104,21 @@ scheduler(void)
  * With the base scheduler, just add it to the end of the run queue.
  */
 int
-make_runnable(struct thread *t)
+make_runnable_cfs(struct thread *t)
 {
 	// meant to be called with interrupts off
-        if (SCHEDULER == CFS) return make_runnable_cfs(t);
-        else return make_runnable_rr(t);
-
+	assert(curspl>0);
+	insertion(t);
+	//inorderTraversal(root);
+	return 0; //q_addtail(runqueue, t);
 }
 
 /*
  * Debugging function to dump the run queue.
  */
 void
-print_run_queue(void)
+print_run_queue_cfs(void)
 {
-	/* Turn interrupts off so the whole list prints atomically. */
-        if (SCHEDULER == CFS) print_run_queue_cfs();
-        else print_run_queue_rr();
-
+	kprintf("TODO\n");
 }
+
