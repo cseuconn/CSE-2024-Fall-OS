@@ -12,8 +12,8 @@ enum nodeColor {
 };
 
 int thread_cmp(struct thread* t1, struct thread* t2){
-    if (t1->secs == t2->secs && t1->nsecs == t2->nsecs) return t2 > t1 ? 1 : -1;
-    else if (t1->secs > t2->secs || (t1->secs == t2->secs && t1->nsecs > t2->nsecs)) return -1;
+    if (t1->cpu_secs == t2->cpu_secs && t1->cpu_nsecs == t2->cpu_nsecs) return t2 > t1 ? 1 : -1;
+    else if (t1->cpu_secs > t2->cpu_secs || (t1->cpu_secs == t2->cpu_secs && t1->cpu_nsecs > t2->cpu_nsecs)) return -1;
     else return 1;
 }
 
@@ -325,7 +325,7 @@ void deletion(struct thread* data) {
 void inorderTraversal(struct rbNode *node) {
   if (node) {
     inorderTraversal(node->link[0]);
-    kprintf("%d-%d ", node->data->secs, node->data->nsecs);
+    kprintf("%d-%d ", node->data->cpu_secs, node->data->cpu_nsecs);
     inorderTraversal(node->link[1]);
   }
   return;

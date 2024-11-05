@@ -13,7 +13,7 @@
 #define NSEMLOOPS     63
 #define NLOCKLOOPS    120
 #define NCVLOOPS      5
-#define NTHREADS      2
+#define NTHREADS      32
 
 static volatile unsigned long testval1;
 static volatile unsigned long testval2;
@@ -163,7 +163,7 @@ locktestthread(void *junk, unsigned long num)
 	}
 	for (j = 0; j < 100000; j++){}
 	//kprintf("A");
-	kprintf("%d %d %d\n", curthread->secs, curthread->nsecs, curthread->pid);
+	//kprintf("%d %d %d\n", curthread->secs, curthread->nsecs, curthread->pid);
 	//inorderTraversal(root);
 	V(donesem);
 }

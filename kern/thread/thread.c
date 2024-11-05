@@ -59,11 +59,15 @@ thread_create(const char *name)
 	thread->t_vmspace = NULL;
 
 	thread->t_cwd = NULL;
-	thread->secs = 0;
-	thread->nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
+	thread->cpu_secs = 0;
+	thread->cpu_nsecs = 0; // at the beginning, there has elapsed no time when the thread has been running
 	/* if the clock is not initialized, then we fill this with a magic number
 	 * turn interrupts off before setting thread pid */
 	//spl = splx()
+	thread->temp_start_secs = 0;
+	thread->temp_start_nsecs = 0;
+	thread->first_start_secs = 0;
+	thread->first_start_nsecs = 0;
 	int s = splhigh();
 	thread->pid = next_pid;
 	next_pid++;
@@ -71,11 +75,11 @@ thread_create(const char *name)
 
 	if (thread->pid == 0) {
 		// if we're the first process fill with dummy values
-		thread->start_secs = -1;
-		thread->start_nsecs = -1;
+		thread->creation_secs = -1;
+		thread->creation_nsecs = -1;
 	}
 
-	else gettime(&(thread->start_secs), &(thread->start_nsecs));
+	else gettime(&(thread->creation_secs), &(thread->creation_nsecs));
 	// If you add things to the thread structure, be sure to initialize
 	// them here.
 	
@@ -433,19 +437,19 @@ mi_switch(threadstate_t nextstate)
 	time_t secs_diff;
 	u_int32_t nsecs_diff;
 	gettime(&secs, &nsecs);
-	if (cur->pid == 0 && cur->start_secs == -1 && cur->start_nsecs == -1) {
+	if (cur->pid == 0 && cur->creation_secs == -1 && cur->creation_nsecs == -1) {
 		/* first time updating the init thread */
-		gettime(&(cur->start_secs), &(cur->start_nsecs));
+		gettime(&(cur->creation_secs), &(cur->creation_nsecs));
 	}
 
 	else {
-		getinterval(cur->start_secs, cur->start_nsecs, secs, nsecs, &secs_diff, &nsecs_diff);
+		getinterval(cur->temp_start_secs, cur->temp_start_nsecs, secs, nsecs, &secs_diff, &nsecs_diff);
 
-		cur->secs += secs_diff;
-		cur->nsecs += nsecs_diff;
-		if (cur->nsecs < 0) {
-			cur->nsecs += 1000000000;
-			cur->secs--;
+		cur->cpu_secs += secs_diff;
+		cur->cpu_nsecs += nsecs_diff;
+		if (cur->cpu_nsecs < 0) {
+			cur->cpu_nsecs += 1000000000;
+			cur->cpu_secs--;
 		}
 	}
 
@@ -471,8 +475,11 @@ mi_switch(threadstate_t nextstate)
 
 	next = scheduler();
 	// put the current time into next right now
-	gettime(&(next->start_secs), &(next->start_nsecs));
-
+	gettime(&(next->temp_start_secs), &(next->temp_start_nsecs));
+	// if this thread is starting for the first time, then do this.
+	if (next->cpu_secs == 0 && next->cpu_nsecs == 0) {
+		gettime(&(next->first_start_secs), &(next->first_start_nsecs));
+	}
 	/* update curthread */
 	curthread = next;
 	
@@ -507,6 +514,17 @@ mi_switch(threadstate_t nextstate)
 void
 thread_exit(void)
 {
+        //time_t secs;
+        //u_int32_t nsecs;
+        time_t turnaround_secs;
+        u_int32_t turnaround_nsecs;
+	time_t response_secs;
+	u_int32_t response_nsecs;
+        gettime(&(curthread->ending_secs), &(curthread->ending_nsecs));
+	getinterval(curthread->first_start_secs, curthread->first_start_nsecs, curthread->ending_secs, curthread->ending_nsecs, &turnaround_secs, &turnaround_nsecs);
+	getinterval(curthread->creation_secs, curthread->creation_nsecs, curthread->first_start_secs, curthread->first_start_nsecs, &response_secs, &response_nsecs);
+        kprintf("Thread %d exiting, response time %d-%d, turnaround time %d-%d, CPU time %d-%d\n", curthread->pid, response_secs, response_nsecs, turnaround_secs, turnaround_nsecs, curthread->cpu_secs, curthread->cpu_nsecs);
+
 	deletion(curthread);
 	if (curthread->t_stack != NULL) {
 		/*
