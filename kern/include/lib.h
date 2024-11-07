@@ -201,7 +201,7 @@ int copyoutstr(const char *src, userptr_t userdest, size_t len, size_t *got);
  */
 extern int lbolt;
 void clocksleep(int seconds);
-
+void csleep(int c_secs);
 /*
  * Other miscellaneous stuff
  */

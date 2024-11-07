@@ -17,7 +17,7 @@
 /*
  *  Scheduler data
  */
-#define SCHEDULER CFS
+#define SCHEDULER RR
 // Queue of runnable threads
 //static struct queue *runqueue;
 struct rbNode* root = NULL; //static struct rbNode* root;

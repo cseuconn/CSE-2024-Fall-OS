@@ -5,7 +5,7 @@
 #include <machine/spl.h>
 #include <scheduler_rr.h>
 #include <queue.h>
-#define SCHEDULER RR
+//#define SCHEDULER RR
 
 //static struct queue *runqueue;
 //runqueue = NULL;

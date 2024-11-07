@@ -8,7 +8,7 @@
  * The address of lbolt has thread_wakeup called on it once a second.
  */
 int lbolt;
-
+int lbolt_csleep;
 static int lbolt_counter;
 
 /*
@@ -28,6 +28,7 @@ hardclock(void)
 		lbolt_counter = 0;
 		thread_wakeup(&lbolt);
 	}
+	thread_wakeup(&lbolt_csleep);
 
 	thread_yield();
 }
@@ -47,3 +48,18 @@ clocksleep(int num_secs)
 	}
 	splx(s);
 }
+
+void
+csleep(int c_secs)
+{
+        int s;
+
+        s = splhigh();
+        while (c_secs > 0) {
+                thread_sleep(&lbolt_csleep);
+                c_secs--;
+        }
+        splx(s);
+}
+
+
