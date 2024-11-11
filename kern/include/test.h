@@ -26,7 +26,7 @@ int threadtest3(int, char **);
 int semtest(int, char **);
 int locktest(int, char **);
 int cvtest(int, char **);
-
+int schedtest(int, char **);
 /* filesystem tests */
 int fstest(int, char **);
 int readstress(int, char **);

@@ -30,7 +30,7 @@ hardclock(void)
 	}
 	thread_wakeup(&lbolt_csleep);
 
-	thread_yield();
+	if (lbolt_counter % 10 == 0) thread_yield();
 }
 
 /*

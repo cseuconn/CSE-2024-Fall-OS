@@ -162,20 +162,14 @@ locktestthread(void *junk, unsigned long num)
 		lock_release(testlock);
 		//kprintf("%d %d\n", curthread->secs, curthread->nsecs);
 	}
-	if (num % 4 == 0) {
-		csleep(1);
-		for (j = 0; j < 2000; j++){}
-                csleep(1);
-                for (j = 0; j < 2000; j++){}
-                csleep(1);
-                for (j = 0; j < 2000; j++){}
-                csleep(1);
-                for (j = 0; j < 2000; j++){}
-                csleep(1);
-                for (j = 0; j < 2000; j++){}
-
+	if (num % 4 < 2) {
+		int k;
+		for (k = 0; k < 10; k++) {
+			for (j = 0; j < 10000; j++){}
+			csleep(1);
+		}
 	}
-	else for (j = 0; j < 10000; j++){}
+	else for (j = 0; j < 350000; j++){}
 	//kprintf("A");
 	//kprintf("%d %d %d\n", curthread->secs, curthread->nsecs, curthread->pid);
 	//inorderTraversal(root);

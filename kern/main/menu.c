@@ -536,7 +536,7 @@ static struct {
 	/* synchronization assignment tests */
 	{ "sy2",	locktest },
 	{ "sy3",	cvtest },
-
+	{ "sy4", 	schedtest },
 	/* file system assignment tests */
 	{ "fs1",	fstest },
 	{ "fs2",	readstress },

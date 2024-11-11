@@ -21,10 +21,10 @@
 /* by changing the select statement on line 333 of main/clock.c */
 /* That change will slow down the simulator so it doesn't hog the CPU */
 /* See comments in that file for further details */
-#define HZ  100
+#define HZ  1000
 #else
 /* More realistic value */
-#define HZ  100
+#define HZ  1000
 #endif
 
 void hardclock(void);
