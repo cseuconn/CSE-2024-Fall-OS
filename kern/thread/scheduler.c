@@ -10,6 +10,7 @@
 #include <scheduler.h>
 #include <scheduler_rr.h>
 #include <scheduler_cfs.h>
+#include <scheduler_fifo.h>
 #include <thread.h>
 #include <machine/spl.h>
 #include <queue.h>
@@ -18,6 +19,7 @@
  *  Scheduler data
  */
 #define SCHEDULER RR
+#define SCHEDULER FIFO
 // Queue of runnable threads
 //static struct queue *runqueue;
 struct rbNode* root = NULL; //static struct rbNode* root;
