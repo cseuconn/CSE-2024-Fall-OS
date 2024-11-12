@@ -19,7 +19,8 @@
  */
 enum schedulerType {
   RR,
-  CFS
+  CFS,
+  FIFO
 };
 
 struct thread;

@@ -10,6 +10,7 @@
 #include <scheduler.h>
 #include <scheduler_rr.h>
 #include <scheduler_cfs.h>
+#include <scheduler_fifo.h>
 #include <thread.h>
 #include <machine/spl.h>
 #include <queue.h>
