@@ -384,6 +384,11 @@ scheduler.o: ${S}/thread/scheduler.c
 SRCS+=${S}/thread/scheduler.c
 OBJS+=scheduler.o
 
+scheduler_fifo.o: ${S}/thread/scheduler_fifo.c
+	${COMPILE.c} ${S}/thread/scheduler_fifo.c
+SRCS+=${S}/thread/scheduler_fifo.c
+OBJS+=scheduler_fifo.o
+
 thread.o: ${S}/thread/thread.c
 	${COMPILE.c} ${S}/thread/thread.c
 SRCS+=${S}/thread/thread.c
