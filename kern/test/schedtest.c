@@ -16,8 +16,10 @@
 #define RANDOM 1
 #define IO_CPU 2
 #define LONG_SHORT 3
+#define LONG_FIRST 4
 #define THREAD_SCHEDULE RANDOM
 #define LOAD LONG_SHORT
+#define RANDOM_ORDER 1
 static struct semaphore *donesem;
 
 static
@@ -37,7 +39,7 @@ void
 schedtestthread(void *junk, unsigned long num)
 {
 	int j, k;
-	if (num % 4 < 2) {
+	if ((num % 4 < 2 && LOAD != LONG_FIRST) || (num < (NTHREADS / 2) && LOAD == LONG_FIRST)) {
 		if (LOAD == IO_CPU) {
 			for (k = 0; k < 10; k++) {
 				for (j = 0; j < 10000; j++){}
@@ -57,7 +59,7 @@ schedtestthread(void *junk, unsigned long num)
 int
 schedtest(int nargs, char **args)
 {
-	int i, result, j;
+	int i, result, j, n;
 
 	(void)nargs;
 	(void)args;
@@ -65,7 +67,10 @@ schedtest(int nargs, char **args)
 	kprintf("Starting scheduler test...\n");
 
 	for (i=0; i<NTHREADS; i++) {
-		result = thread_fork("schedtest", NULL, i, schedtestthread,
+		if (RANDOM_ORDER){n = random() % NTHREADS;}
+		else{n = i;}
+
+		result = thread_fork("schedtest", NULL, n, schedtestthread,
 				     NULL);
 		if (result) {
 			panic("schedtest: thread_fork failed: %s %s\n",
