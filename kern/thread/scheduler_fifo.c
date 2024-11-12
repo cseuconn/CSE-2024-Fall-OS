@@ -50,7 +50,7 @@ struct thread *scheduler_fifo(void)
 int make_runnable_fifo(struct thread *t)
 {
     assert(curspl > 0);
-    if (t->runtime > 0):
+    if ((t->cpu_secs + (t->cpu_nsecs * 1000000000)) > 0):
         return q_addhead(fifo_runqueue, t)
     else:
         return q_addtail(fifo_runqueue, t);
