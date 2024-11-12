@@ -19,7 +19,6 @@
  *  Scheduler data
  */
 #define SCHEDULER RR
-#define SCHEDULER FIFO
 // Queue of runnable threads
 //static struct queue *runqueue;
 struct rbNode* root = NULL; //static struct rbNode* root;
