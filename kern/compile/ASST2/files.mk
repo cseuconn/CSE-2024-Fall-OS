@@ -114,21 +114,6 @@ lser_att.o: ${S}/dev/lamebus/lser_att.c
 SRCS+=${S}/dev/lamebus/lser_att.c
 OBJS+=lser_att.o
 
-stoplight.o: ${S}/asst1/stoplight.c
-	${COMPILE.c} ${S}/asst1/stoplight.c
-SRCS+=${S}/asst1/stoplight.c
-OBJS+=stoplight.o
-
-catmouse.o: ${S}/asst1/catmouse.c
-	${COMPILE.c} ${S}/asst1/catmouse.c
-SRCS+=${S}/asst1/catmouse.c
-OBJS+=catmouse.o
-
-bowls.o: ${S}/asst1/bowls.c
-	${COMPILE.c} ${S}/asst1/bowls.c
-SRCS+=${S}/asst1/bowls.c
-OBJS+=bowls.o
-
 dumbvm.o: ${S}/arch/mips/mips/dumbvm.c
 	${COMPILE.c} ${S}/arch/mips/mips/dumbvm.c
 SRCS+=${S}/arch/mips/mips/dumbvm.c
@@ -259,6 +244,11 @@ misc.o: ${S}/lib/misc.c
 SRCS+=${S}/lib/misc.c
 OBJS+=misc.o
 
+rbtree.o: ${S}/lib/rbtree.c
+	${COMPILE.c} ${S}/lib/rbtree.c
+SRCS+=${S}/lib/rbtree.c
+OBJS+=rbtree.o
+
 ntoh.o: ${S}/lib/ntoh.c
 	${COMPILE.c} ${S}/lib/ntoh.c
 SRCS+=${S}/lib/ntoh.c
@@ -384,15 +374,25 @@ scheduler.o: ${S}/thread/scheduler.c
 SRCS+=${S}/thread/scheduler.c
 OBJS+=scheduler.o
 
-scheduler_fifo.o: ${S}/thread/scheduler_fifo.c
-	${COMPILE.c} ${S}/thread/scheduler_fifo.c
-SRCS+=${S}/thread/scheduler_fifo.c
-OBJS+=scheduler_fifo.o
-
 thread.o: ${S}/thread/thread.c
 	${COMPILE.c} ${S}/thread/thread.c
 SRCS+=${S}/thread/thread.c
 OBJS+=thread.o
+
+scheduler_rr.o: ${S}/thread/scheduler_rr.c
+	${COMPILE.c} ${S}/thread/scheduler_rr.c
+SRCS+=${S}/thread/scheduler_rr.c
+OBJS+=scheduler_rr.o
+
+scheduler_cfs.o: ${S}/thread/scheduler_cfs.c
+	${COMPILE.c} ${S}/thread/scheduler_cfs.c
+SRCS+=${S}/thread/scheduler_cfs.c
+OBJS+=scheduler_cfs.o
+
+scheduler_fifo.o: ${S}/thread/scheduler_fifo.c
+	${COMPILE.c} ${S}/thread/scheduler_fifo.c
+SRCS+=${S}/thread/scheduler_fifo.c
+OBJS+=scheduler_fifo.o
 
 main.o: ${S}/main/main.c
 	${COMPILE.c} ${S}/main/main.c
@@ -464,13 +464,18 @@ fstest.o: ${S}/test/fstest.c
 SRCS+=${S}/test/fstest.c
 OBJS+=fstest.o
 
+schedtest.o: ${S}/test/schedtest.c
+	${COMPILE.c} ${S}/test/schedtest.c
+SRCS+=${S}/test/schedtest.c
+OBJS+=schedtest.o
+
 uw-vmstats.o: ${S}/vm/uw-vmstats.c
 	${COMPILE.c} ${S}/vm/uw-vmstats.c
 SRCS+=${S}/vm/uw-vmstats.c
 OBJS+=uw-vmstats.o
 
-autoconf.o: ${S}/compile/ASST1/autoconf.c
-	${COMPILE.c} ${S}/compile/ASST1/autoconf.c
-SRCS+=${S}/compile/ASST1/autoconf.c
+autoconf.o: ${S}/compile/ASST2/autoconf.c
+	${COMPILE.c} ${S}/compile/ASST2/autoconf.c
+SRCS+=${S}/compile/ASST2/autoconf.c
 OBJS+=autoconf.o
 
