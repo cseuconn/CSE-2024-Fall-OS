@@ -12,18 +12,10 @@ enum nodeColor {
 };
 
 int thread_cmp(struct thread* t1, struct thread* t2){
-    if (t1->cpu_secs == t2->cpu_secs && t1->cpu_nsecs == t2->cpu_nsecs) return t2 > t1 ? 1 : -1;
-    else if (t1->cpu_secs > t2->cpu_secs || (t1->cpu_secs == t2->cpu_secs && t1->cpu_nsecs > t2->cpu_nsecs)) return -1;
+    if (t1->v_secs == t2->v_secs && t1->v_nsecs == t2->v_nsecs) return t2 > t1 ? 1 : -1;
+    else if (t1->v_secs > t2->v_secs || (t1->v_secs == t2->v_secs && t1->v_nsecs > t2->v_nsecs)) return -1;
     else return 1;
 }
-
-//struct rbNode {
-//  struct thread* data;
-//  int color;
-//  struct rbNode *link[2];
-//};
-
-//extern struct rbNode *root; // = NULL;
 
 // Create a red-black tree
 struct rbNode *createNode(struct thread* data) {
@@ -129,7 +121,7 @@ void deletion(struct thread* data) {
   enum nodeColor color;
 
   if (!root) {
-    kprintf("Tree not available\n");
+    //kprintf("Tree not available\n");
     return;
   }
 

@@ -102,7 +102,7 @@ make_runnable_rr(struct thread *t)
 {
         // meant to be called with interrupts off
         assert(curspl>0);
-        insertion(t);
+//        insertion(t);
         //inorderTraversal(root);
         return q_addtail(runqueue, t);
 }

@@ -27,7 +27,7 @@ int           q_empty(struct queue *);
 int           q_addtail(struct queue *, void *ptr);
 void         *q_remhead(struct queue *);
 void          q_destroy(struct queue *);
-
+int q_addhead(struct queue* q, void* ptr);
 /* 
  * These are really intended only for debugging. Using them encodes 
  * knowledge of how the queue works, which is usually undesirable.

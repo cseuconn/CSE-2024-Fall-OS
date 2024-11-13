@@ -21,9 +21,6 @@ struct thread;
 
 struct thread *scheduler_cfs(void);
 int make_runnable_cfs(struct thread *t);
-
-void print_run_queue_cfs(void);
-
 void scheduler_bootstrap_cfs(void);
 int scheduler_preallocate_cfs(int numthreads);
 void scheduler_killall_cfs(void);

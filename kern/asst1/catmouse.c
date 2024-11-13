@@ -281,7 +281,7 @@ catmouse(int nargs,
    * Start NumCats cat_simulation() threads.
    */
   for (index = 0; index < NumCats; index++) {
-    error = thread_fork("cat_simulation thread",NULL,index,cat_simulation,NULL);
+    error = thread_fork("cat_simulation thread",NULL,index,cat_simulation,NULL, 1);
     if (error) {
       panic("cat_simulation: thread_fork failed: %s\n", strerror(error));
     }
@@ -291,7 +291,7 @@ catmouse(int nargs,
    * Start NumMice mouse_simulation() threads.
    */
   for (index = 0; index < NumMice; index++) {
-    error = thread_fork("mouse_simulation thread",NULL,index,mouse_simulation,NULL);
+    error = thread_fork("mouse_simulation thread",NULL,index,mouse_simulation,NULL, 1);
     if (error) {
       panic("mouse_simulation: thread_fork failed: %s\n",strerror(error));
     }

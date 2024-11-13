@@ -102,12 +102,12 @@ make_sleepalots(int howmany)
 
 	for (i=0; i<howmany; i++) {
 		snprintf(name, sizeof(name), "sleepalot%d", i);
-		result = thread_fork(name, NULL, i, sleepalot_thread, NULL);
+		result = thread_fork(name, NULL, i, sleepalot_thread, NULL, 1);
 		if (result) {
 			panic("thread_fork failed: %s\n", strerror(result));
 		}
 	}
-	result = thread_fork("waker", NULL, 0, waker_thread, NULL);
+	result = thread_fork("waker", NULL, 0, waker_thread, NULL, 1);
 	if (result) {
 		panic("thread_fork failed: %s\n", strerror(result));
 	}
@@ -179,7 +179,7 @@ make_computes(int howmany)
 
 	for (i=0; i<howmany; i++) {
 		snprintf(name, sizeof(name), "compute%d", i);
-		result = thread_fork(name, NULL, i, compute_thread, NULL);
+		result = thread_fork(name, NULL, i, compute_thread, NULL, 1);
 		if (result) {
 			panic("thread_fork failed: %s\n", strerror(result));
 		}

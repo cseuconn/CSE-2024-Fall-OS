@@ -367,6 +367,7 @@ file      thread/scheduler.c
 file      thread/thread.c
 file      thread/scheduler_rr.c
 file      thread/scheduler_cfs.c
+file      thread/scheduler_fifo.c
 #
 # Main/toplevel stuff
 #

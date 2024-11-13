@@ -89,7 +89,7 @@ semtest(int nargs, char **args)
 	kprintf("ok\n");
 
 	for (i=0; i<NTHREADS; i++) {
-		result = thread_fork("semtest", NULL, i, semtestthread, NULL);
+		result = thread_fork("semtest", NULL, i, semtestthread, NULL, 1);
 		if (result) {
 			panic("semtest: thread_fork failed: %s\n", 
 			      strerror(result));
@@ -190,7 +190,7 @@ locktest(int nargs, char **args)
 
 	for (i=0; i<NTHREADS; i++) {
 		result = thread_fork("synchtest", NULL, i, locktestthread,
-				     NULL);
+				     NULL, 1);
 		if (result) {
 			panic("locktest: thread_fork failed: %s %s\n",
 			      strerror(result), i);
@@ -272,7 +272,7 @@ cvtest(int nargs, char **args)
 
 	for (i=0; i<NTHREADS; i++) {
 		result = thread_fork("synchtest", NULL, i, cvtestthread,
-				      NULL);
+				      NULL, 1);
 		if (result) {
 			panic("cvtest: thread_fork failed: %s\n",
 			      strerror(result));

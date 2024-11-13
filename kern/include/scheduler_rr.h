@@ -21,9 +21,6 @@ struct thread;
 extern struct queue* runqueue;
 struct thread *scheduler_rr(void);
 int make_runnable_rr(struct thread *t);
-
-void print_run_queue_rr(void);
-
 void scheduler_bootstrap_rr(void);
 int scheduler_preallocate_rr(int numthreads);
 void scheduler_killall_rr(void);

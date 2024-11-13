@@ -92,7 +92,7 @@ mallocstress(int nargs, char **args)
 
 	for (i=0; i<NTHREADS; i++) {
 		result = thread_fork("mallocstress", sem, i, mallocthread,
-				     NULL);
+				     NULL, 1);
 		if (result) {
 			panic("mallocstress: thread_fork failed: %s\n",
 			      strerror(result));

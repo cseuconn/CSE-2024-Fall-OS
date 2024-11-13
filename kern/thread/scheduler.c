@@ -10,6 +10,7 @@
 #include <scheduler.h>
 #include <scheduler_rr.h>
 #include <scheduler_cfs.h>
+#include <scheduler_fifo.h>
 #include <thread.h>
 #include <machine/spl.h>
 #include <queue.h>
@@ -17,11 +18,12 @@
 /*
  *  Scheduler data
  */
-#define SCHEDULER RR
+#define SCHEDULER FIFO
 // Queue of runnable threads
 //static struct queue *runqueue;
 struct rbNode* root = NULL; //static struct rbNode* root;
 struct queue* runqueue = NULL;
+struct queue* fifo_runqueue = NULL;
 /*
  * Setup function
  */
@@ -29,8 +31,8 @@ void
 scheduler_bootstrap(void)
 {
 	if (SCHEDULER == CFS) scheduler_bootstrap_cfs();
-	else scheduler_bootstrap_rr();
-
+	else if (SCHEDULER == RR) scheduler_bootstrap_rr();
+	else scheduler_bootstrap_fifo();
 }
 
 /*
@@ -44,8 +46,8 @@ int
 scheduler_preallocate(int nthreads)
 {
         if (SCHEDULER == CFS) return scheduler_preallocate_cfs(nthreads);
-        else return scheduler_preallocate_rr(nthreads);
-
+        else if (SCHEDULER == RR) return scheduler_preallocate_rr(nthreads);
+	else scheduler_preallocate_fifo(nthreads);
 }
 
 /*
@@ -58,7 +60,8 @@ void
 scheduler_killall(void)
 {
 	if (SCHEDULER == CFS) scheduler_killall_cfs();
-	else scheduler_killall_rr();
+	else if (SCHEDULER == RR) scheduler_killall_rr();
+	else scheduler_killall_fifo();
 }
 
 /*
@@ -72,8 +75,8 @@ void
 scheduler_shutdown(void)
 {
         if (SCHEDULER == CFS) scheduler_shutdown_cfs();
-        else scheduler_shutdown_rr();
-
+        else if (SCHEDULER == RR) scheduler_shutdown_rr();
+	else scheduler_shutdown_fifo();
 }
 
 /*
@@ -87,7 +90,8 @@ scheduler(void)
 {
 	// meant to be called with interrupts off
         if (SCHEDULER == CFS) return scheduler_cfs();
-        else return scheduler_rr();
+        else if (SCHEDULER == RR) return scheduler_rr();
+	else return scheduler_fifo();
 }
 
 /* 
@@ -99,8 +103,8 @@ make_runnable(struct thread *t)
 {
 	// meant to be called with interrupts off
         if (SCHEDULER == CFS) return make_runnable_cfs(t);
-        else return make_runnable_rr(t);
-
+        else if (SCHEDULER == RR) return make_runnable_rr(t);
+	else return make_runnable_fifo(t);
 }
 
 /*
@@ -111,6 +115,6 @@ print_run_queue(void)
 {
 	/* Turn interrupts off so the whole list prints atomically. */
         if (SCHEDULER == CFS) print_run_queue_cfs();
-        else print_run_queue_rr();
-
+        else if (SCHEDULER == RR) print_run_queue_rr();
+	else print_run_queue_fifo();
 }

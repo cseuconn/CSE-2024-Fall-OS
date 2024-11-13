@@ -120,6 +120,15 @@ q_remhead(struct queue *q)
 	return ret;
 }
 
+int q_addhead(struct queue* q, void* ptr)
+{
+	assert(q->size > 0);
+	int next = (q->nextread-1) % q->size;
+	q->data[next] = ptr;
+	q->nextread = next;
+	return 0;
+}
+
 void
 q_destroy(struct queue *q)
 {

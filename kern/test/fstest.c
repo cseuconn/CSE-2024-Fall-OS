@@ -295,7 +295,7 @@ doreadstress(const char *filesys)
 
 	for (i=0; i<NTHREADS; i++) {
 		err = thread_fork("readstress", (void *)filesys, i, 
-				  readstress_thread, NULL);
+				  readstress_thread, NULL, 1);
 		if (err) {
 			panic("readstress: thread_fork failed: %s\n",
 			      strerror(err));
@@ -357,7 +357,7 @@ dowritestress(const char *filesys)
 
 	for (i=0; i<NTHREADS; i++) {
 		err = thread_fork("writestress", (void *)filesys, i, 
-				     writestress_thread, NULL);
+				     writestress_thread, NULL, 1);
 		if (err) {
 			panic("thread_fork failed %s\n", strerror(err));
 		}
@@ -411,7 +411,7 @@ dowritestress2(const char *filesys)
 
 	for (i=0; i<NTHREADS; i++) {
 		err = thread_fork("writestress2", (void *)filesys, i, 
-				      writestress2_thread, NULL);
+				      writestress2_thread, NULL, 1);
 		if (err) {
 			panic("writestress2: thread_fork failed: %s\n",
 			      strerror(err));
@@ -484,7 +484,7 @@ docreatestress(const char *filesys)
 
 	for (i=0; i<NTHREADS; i++) {
 		err = thread_fork("createstress", (void *)filesys, i, 
-				  createstress_thread, NULL);
+				  createstress_thread, NULL, 1);
 		if (err) {
 			panic("createstress: thread_fork failed %s\n",
 			      strerror(err));

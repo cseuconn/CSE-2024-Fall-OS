@@ -39,14 +39,17 @@ struct thread {
 	struct vnode *t_cwd;
 	time_t cpu_secs; // number of seconds that this thread has been alive
 	u_int32_t cpu_nsecs; // number of nanoseconds that this thread has been alive
-	time_t temp_start_secs;
+	time_t v_secs; // virtual time accounting for priority
+	u_int32_t v_nsecs;
+	time_t temp_start_secs; // for counting the cpu secs
 	u_int32_t temp_start_nsecs;
-	time_t creation_secs;
+	time_t creation_secs; // creation time of thread
 	u_int32_t creation_nsecs;
-	time_t first_start_secs;
+	time_t first_start_secs; // first run
 	u_int32_t first_start_nsecs;
 	time_t ending_secs;
 	u_int32_t ending_nsecs;
+	int priority;
 	pid_t pid;
 };
 
@@ -72,7 +75,7 @@ void thread_shutdown(void);
 int thread_fork(const char *name, 
 		void *data1, unsigned long data2, 
 		void (*func)(void *, unsigned long),
-		struct thread **ret);
+		struct thread **ret, int priority);
 
 /*
  * Cause the current thread to exit.

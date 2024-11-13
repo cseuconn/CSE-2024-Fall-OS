@@ -217,7 +217,7 @@ createcars(int nargs,
                                     index,
                                     approachintersection,
                                     NULL
-                                    );
+                                    , 1);
 
                 /*
                  * panic() on error.

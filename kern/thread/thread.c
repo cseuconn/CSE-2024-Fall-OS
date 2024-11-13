@@ -42,7 +42,7 @@ static int next_pid = 0;
 
 static
 struct thread *
-thread_create(const char *name)
+thread_create(const char *name, int priority)
 {
 	struct thread *thread = kmalloc(sizeof(struct thread));
 	if (thread==NULL) {
@@ -68,6 +68,9 @@ thread_create(const char *name)
 	thread->temp_start_nsecs = 0;
 	thread->first_start_secs = 0;
 	thread->first_start_nsecs = 0;
+	thread->v_secs = 0;
+	thread->v_nsecs = 0;
+	thread->priority = priority;
 	int s = splhigh();
 	thread->pid = next_pid;
 	next_pid++;
@@ -243,7 +246,7 @@ thread_bootstrap(void)
 	 * Create the thread structure for the first thread
 	 * (the one that's already running)
 	 */
-	me = thread_create("<boot/menu>");
+	me = thread_create("<boot/menu>", 1);
 	if (me==NULL) {
 		panic("thread_bootstrap: Out of memory\n");
 	}
@@ -290,13 +293,13 @@ int
 thread_fork(const char *name, 
 	    void *data1, unsigned long data2,
 	    void (*func)(void *, unsigned long),
-	    struct thread **ret)
+	    struct thread **ret, int priority)
 {
 	struct thread *newguy;
 	int s, result;
 
 	/* Allocate a thread */
-	newguy = thread_create(name);
+	newguy = thread_create(name, priority);
 	if (newguy==NULL) {
 		return ENOMEM;
 	}
@@ -436,6 +439,7 @@ mi_switch(threadstate_t nextstate)
 	u_int32_t nsecs;
 	time_t secs_diff;
 	u_int32_t nsecs_diff;
+	int v_secs, v_nsecs, v_total;
 	gettime(&secs, &nsecs);
 	if (cur->pid == 0 && cur->creation_secs == -1 && cur->creation_nsecs == -1) {
 		/* first time updating the init thread */
@@ -443,13 +447,25 @@ mi_switch(threadstate_t nextstate)
 	}
 
 	else {
+		// update the actual runtime
 		getinterval(cur->temp_start_secs, cur->temp_start_nsecs, secs, nsecs, &secs_diff, &nsecs_diff);
 
 		cur->cpu_secs += secs_diff;
 		cur->cpu_nsecs += nsecs_diff;
-		if (cur->cpu_nsecs < 0) {
-			cur->cpu_nsecs += 1000000000;
-			cur->cpu_secs--;
+		if (cur->cpu_nsecs > 1000000000) {
+			cur->cpu_nsecs -= 1000000000;
+			cur->cpu_secs++;
+		}
+		
+		// update virtual runtime
+		v_total = (secs_diff*1000000000 + nsecs_diff) / cur->priority;
+		v_secs = v_total / 1000000000;
+		v_nsecs = v_total % 1000000000;
+		cur->v_secs += v_secs;
+		cur->v_nsecs += v_nsecs;
+		if (cur->v_nsecs > 1000000000) {
+			cur->v_nsecs -= 1000000000;
+			cur->v_nsecs++;
 		}
 	}
 
@@ -521,7 +537,7 @@ thread_exit(void)
 	time_t response_secs;
 	u_int32_t response_nsecs;
         gettime(&(curthread->ending_secs), &(curthread->ending_nsecs));
-	getinterval(curthread->first_start_secs, curthread->first_start_nsecs, curthread->ending_secs, curthread->ending_nsecs, &turnaround_secs, &turnaround_nsecs);
+	getinterval(curthread->creation_secs, curthread->creation_nsecs, curthread->ending_secs, curthread->ending_nsecs, &turnaround_secs, &turnaround_nsecs);
 	getinterval(curthread->creation_secs, curthread->creation_nsecs, curthread->first_start_secs, curthread->first_start_nsecs, &response_secs, &response_nsecs);
         kprintf("Thread %d exiting, response time %d-%d, turnaround time %d-%d, CPU time %d-%d\n", curthread->pid, response_secs, response_nsecs, turnaround_secs, turnaround_nsecs, curthread->cpu_secs, curthread->cpu_nsecs);
 

@@ -93,10 +93,7 @@ scheduler_cfs(void)
 	//print_run_queue();
 	struct thread* next = leftmost(root)->data;
 	deletion(leftmost(root)->data);
-	//q_remhead(runqueue);
 	return next;
-	//inorderTraversal(root);
-	//return q_remhead(runqueue);
 }
 
 /* 
@@ -109,8 +106,7 @@ make_runnable_cfs(struct thread *t)
 	// meant to be called with interrupts off
 	assert(curspl>0);
 	insertion(t);
-	//inorderTraversal(root);
-	return 0; //q_addtail(runqueue, t);
+	return 0;
 }
 
 /*
