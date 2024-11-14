@@ -140,19 +140,6 @@ memory_management_app/fast:
 .PHONY : memory_management_app/fast
 
 #=============================================================================
-# Target rules for targets named test_memory_allocator
-
-# Build rule for target.
-test_memory_allocator: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_memory_allocator
-.PHONY : test_memory_allocator
-
-# fast build rule for target.
-test_memory_allocator/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/build
-.PHONY : test_memory_allocator/fast
-
-#=============================================================================
 # Target rules for targets named test_garbage_collector
 
 # Build rule for target.
@@ -164,6 +151,19 @@ test_garbage_collector: cmake_check_build_system
 test_garbage_collector/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/build
 .PHONY : test_garbage_collector/fast
+
+#=============================================================================
+# Target rules for targets named test_memory_allocator
+
+# Build rule for target.
+test_memory_allocator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_memory_allocator
+.PHONY : test_memory_allocator
+
+# fast build rule for target.
+test_memory_allocator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/build
+.PHONY : test_memory_allocator/fast
 
 #=============================================================================
 # Target rules for targets named test_defragmenter
@@ -262,8 +262,8 @@ src/memory_allocator.o: src/memory_allocator.c.o
 # target to build an object file
 src/memory_allocator.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/src/memory_allocator.c.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/src/memory_allocator.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_defragmenter.dir/build.make CMakeFiles/test_defragmenter.dir/src/memory_allocator.c.o
 .PHONY : src/memory_allocator.c.o
 
@@ -273,8 +273,8 @@ src/memory_allocator.i: src/memory_allocator.c.i
 # target to preprocess a source file
 src/memory_allocator.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/src/memory_allocator.c.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/src/memory_allocator.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_defragmenter.dir/build.make CMakeFiles/test_defragmenter.dir/src/memory_allocator.c.i
 .PHONY : src/memory_allocator.c.i
 
@@ -284,10 +284,43 @@ src/memory_allocator.s: src/memory_allocator.c.s
 # target to generate assembly for a file
 src/memory_allocator.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/src/memory_allocator.c.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/src/memory_allocator.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_defragmenter.dir/build.make CMakeFiles/test_defragmenter.dir/src/memory_allocator.c.s
 .PHONY : src/memory_allocator.c.s
+
+src/root_pointers.o: src/root_pointers.c.o
+.PHONY : src/root_pointers.o
+
+# target to build an object file
+src/root_pointers.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/src/root_pointers.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/src/root_pointers.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/root_pointers.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_defragmenter.dir/build.make CMakeFiles/test_defragmenter.dir/src/root_pointers.c.o
+.PHONY : src/root_pointers.c.o
+
+src/root_pointers.i: src/root_pointers.c.i
+.PHONY : src/root_pointers.i
+
+# target to preprocess a source file
+src/root_pointers.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/src/root_pointers.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/src/root_pointers.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/root_pointers.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_defragmenter.dir/build.make CMakeFiles/test_defragmenter.dir/src/root_pointers.c.i
+.PHONY : src/root_pointers.c.i
+
+src/root_pointers.s: src/root_pointers.c.s
+.PHONY : src/root_pointers.s
+
+# target to generate assembly for a file
+src/root_pointers.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/src/root_pointers.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_garbage_collector.dir/build.make CMakeFiles/test_garbage_collector.dir/src/root_pointers.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_memory_allocator.dir/build.make CMakeFiles/test_memory_allocator.dir/src/root_pointers.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_defragmenter.dir/build.make CMakeFiles/test_defragmenter.dir/src/root_pointers.c.s
+.PHONY : src/root_pointers.c.s
 
 tests/test_defragmenter.o: tests/test_defragmenter.c.o
 .PHONY : tests/test_defragmenter.o
@@ -386,6 +419,9 @@ help:
 	@echo "... src/memory_allocator.o"
 	@echo "... src/memory_allocator.i"
 	@echo "... src/memory_allocator.s"
+	@echo "... src/root_pointers.o"
+	@echo "... src/root_pointers.i"
+	@echo "... src/root_pointers.s"
 	@echo "... tests/test_defragmenter.o"
 	@echo "... tests/test_defragmenter.i"
 	@echo "... tests/test_defragmenter.s"

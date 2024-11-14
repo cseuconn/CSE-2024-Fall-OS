@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/src/garbage_collector.c" "CMakeFiles/test_garbage_collector.dir/src/garbage_collector.c.o" "gcc" "CMakeFiles/test_garbage_collector.dir/src/garbage_collector.c.o.d"
   "/Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/src/memory_allocator.c" "CMakeFiles/test_garbage_collector.dir/src/memory_allocator.c.o" "gcc" "CMakeFiles/test_garbage_collector.dir/src/memory_allocator.c.o.d"
+  "/Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/src/root_pointers.c" "CMakeFiles/test_garbage_collector.dir/src/root_pointers.c.o" "gcc" "CMakeFiles/test_garbage_collector.dir/src/root_pointers.c.o.d"
   "/Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/tests/test_garbage_collector.c" "CMakeFiles/test_garbage_collector.dir/tests/test_garbage_collector.c.o" "gcc" "CMakeFiles/test_garbage_collector.dir/tests/test_garbage_collector.c.o.d"
   )
 

@@ -5,13 +5,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
+/*
 typedef struct block_header {
     size_t size;
     bool is_free;
     struct block_header* next;
     struct block_header* prev;
 } block_header_t;
+*/
 
 static void move_block(block_header_t* dest, block_header_t* src);
 

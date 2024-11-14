@@ -13,16 +13,44 @@ set(SOURCES
     src/memory_allocator.c
     src/garbage_collector.c
     src/defragmenter.c
+    src/root_pointers.c
 )
 
+set(CMAKE_BUILD_TYPE Debug)
+
 # Add the executable
-add_executable(memory_management_app ${SOURCES})
+add_executable(memory_management_app
+    src/main.c
+    src/memory_allocator.c
+    src/garbage_collector.c
+    src/defragmenter.c
+    src/root_pointers.c
+)
 
 # Add tests
 enable_testing()
-add_executable(test_memory_allocator tests/test_memory_allocator.c src/memory_allocator.c)
-add_executable(test_garbage_collector tests/test_garbage_collector.c src/garbage_collector.c src/memory_allocator.c)
-add_executable(test_defragmenter tests/test_defragmenter.c src/defragmenter.c src/memory_allocator.c)
+
+# Add root_pointers.c to the test_garbage_collector target
+add_executable(test_garbage_collector
+    tests/test_garbage_collector.c
+    src/garbage_collector.c
+    src/memory_allocator.c
+    src/root_pointers.c
+)
+
+# Add root_pointers.c to the test_memory_allocator target if needed
+add_executable(test_memory_allocator
+    tests/test_memory_allocator.c
+    src/memory_allocator.c
+    src/root_pointers.c
+)
+
+add_executable(test_defragmenter
+    tests/test_defragmenter.c
+    src/defragmenter.c
+    src/memory_allocator.c
+    src/root_pointers.c
+)
 
 add_test(NAME TestMemoryAllocator COMMAND test_memory_allocator)
 add_test(NAME TestGarbageCollector COMMAND test_garbage_collector)

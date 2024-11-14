@@ -31,6 +31,7 @@ typedef struct {
 
 // Declare the allocator variable as extern
 extern memory_allocator_t allocator;
+//void* mem_alloc(size_t size);
 
 // Initialize Memory Allocator
 bool mem_init(size_t pool_size);

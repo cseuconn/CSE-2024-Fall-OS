@@ -10,6 +10,7 @@ CMakeFiles/memory_management_app.dir/src/garbage_collector.c.o: \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/__stddef_offsetof.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdbool.h \
   /Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/include/memory_allocator.h \
+  /Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/include/root_pointers.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include/stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include/_stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include/sys/cdefs.h \

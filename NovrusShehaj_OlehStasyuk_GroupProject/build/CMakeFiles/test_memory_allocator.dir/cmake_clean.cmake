@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.o"
   "CMakeFiles/test_memory_allocator.dir/src/memory_allocator.c.o.d"
+  "CMakeFiles/test_memory_allocator.dir/src/root_pointers.c.o"
+  "CMakeFiles/test_memory_allocator.dir/src/root_pointers.c.o.d"
   "CMakeFiles/test_memory_allocator.dir/tests/test_memory_allocator.c.o"
   "CMakeFiles/test_memory_allocator.dir/tests/test_memory_allocator.c.o.d"
   "test_memory_allocator"

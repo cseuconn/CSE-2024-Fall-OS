@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/test_defragmenter.dir/src/defragmenter.c.o.d"
   "CMakeFiles/test_defragmenter.dir/src/memory_allocator.c.o"
   "CMakeFiles/test_defragmenter.dir/src/memory_allocator.c.o.d"
+  "CMakeFiles/test_defragmenter.dir/src/root_pointers.c.o"
+  "CMakeFiles/test_defragmenter.dir/src/root_pointers.c.o.d"
   "CMakeFiles/test_defragmenter.dir/tests/test_defragmenter.c.o"
   "CMakeFiles/test_defragmenter.dir/tests/test_defragmenter.c.o.d"
   "test_defragmenter"

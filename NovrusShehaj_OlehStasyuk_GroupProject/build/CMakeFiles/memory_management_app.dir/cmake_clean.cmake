@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/memory_management_app.dir/src/main.c.o.d"
   "CMakeFiles/memory_management_app.dir/src/memory_allocator.c.o"
   "CMakeFiles/memory_management_app.dir/src/memory_allocator.c.o.d"
+  "CMakeFiles/memory_management_app.dir/src/root_pointers.c.o"
+  "CMakeFiles/memory_management_app.dir/src/root_pointers.c.o.d"
   "memory_management_app"
   "memory_management_app.pdb"
 )
