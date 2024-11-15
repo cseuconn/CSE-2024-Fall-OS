@@ -54,10 +54,6 @@ void FIFO_Scheduling(struct process processes[], int n){
         processes[i].turnaround_time = current_time - processes[i].arrival_time;
         processes[i].waiting_time = processes[i].turnaround_time - processes[i].burst_time;
     }
-
-    //Display results after if we want to use a function instead of printing in the method like above
-    //printf("After scheduling:\n");
-    //....
 }
 
 void RR_Scheduling(struct process processes[], int n, int time_quantom){
@@ -117,10 +113,6 @@ void RR_Scheduling(struct process processes[], int n, int time_quantom){
         processes[i].turnaround_time = processes[i].completion_time - processes[i].arrival_time;
         processes[i].waiting_time = processes[i].turnaround_time - processes[i].burst_time;
     }
-
-
-    //Display results after if we want to use a function instead of printing in the method like above
-   // printf("After Scheduling:\n"); ...
 }
 
 int main(int argc, char *argv[]) {
