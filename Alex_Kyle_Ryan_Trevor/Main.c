@@ -108,8 +108,12 @@ int main(int argc, char *argv[]) {
                 break;
             case 3:
                 printf("\nRound Robin (RR) Schedular\n");
-                RR(proc, n);
+                printf("Enter the time quantum: ");
+                int quantum;
+                scanf("%d", &quantum);
+                RR(proc, n, quantum);
                 break;
+                
             case 4:
                 printf("\nPriority Scheduling Schedular\n");
                 Priority(proc, n);
@@ -123,3 +127,6 @@ int main(int argc, char *argv[]) {
                 break;
         }
     }
+
+    return 0;
+}
