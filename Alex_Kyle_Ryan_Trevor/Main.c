@@ -12,7 +12,6 @@ struct process {
     int is_completed;
 };
 
-
 void sort_by_arrival_time(struct process processes[], int n){
     //Sort the processes by arrival time using insertion sort
     for(int i = 1; i < n; i++){
@@ -47,6 +46,7 @@ void FIFO_Scheduling (struct process processes[], int n){
         //Calculate the current time after the current process completes
         printf("Process %d starts at time %d\n", processes[i].pid, current_time);
         current_time += processes[i].burst_time;
+        processes[i].is_completed = 1;
         printf("Process %d ends at time %d\n", processes[i].pid, current_time);
 
         //Calculate the processes completion, turnaround, and waiting time
@@ -87,6 +87,7 @@ void SJF_Scheduling(struct process processes[], int n)
         //Calculate the current time after the next process completes
         printf("Process %d starts at time %d\n", processes[next].pid, current_time);
         current_time += processes[next].burst_time;
+        processes[next].is_completed = 1;
         printf("Process %d ends at time %d\n", processes[next].pid, current_time);
 
         //Calculate the process's completion, turnaround, and waiting time
