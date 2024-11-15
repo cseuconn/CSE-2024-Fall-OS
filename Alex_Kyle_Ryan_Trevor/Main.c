@@ -131,13 +131,13 @@ void RR_Scheduling(struct process processes[], int n, int time_quantum){
 
                 //Execute process for the time quantum or remaining time
                 if (processes[i].arrival_time <= current_time){
-                    int time_to_exacute = processes[i].remaining_time < time_quantum? processes[i].remaining_time:time_quantum;
+                    int time_to_execute = processes[i].remaining_time < time_quantum? processes[i].remaining_time:time_quantum;
                     //Print process exacuting and current time 
-                    printf("Process %d executes for %d units from time %d\n", processes[i].pid, time_to_exacute, current_time);
+                    printf("Process %d executes for %d units from time %d\n", processes[i].pid, time_to_execute, current_time);
 
                     //Update remaining and current time
-                    current_time += time_to_exacute;
-                    processes[i].remaining_time -= time_to_exacute;
+                    current_time += time_to_execute;
+                    processes[i].remaining_time -= time_to_execute;
                     
                     if (processes[i].remaining_time == 0){
                         processes[i].completion_time = current_time;
@@ -156,40 +156,40 @@ void RR_Scheduling(struct process processes[], int n, int time_quantum){
     }
 }
 
-void Schedular_Menu(void)
+void Scheduler_Menu(proc, n)
 {
-    printf("Choose a schedular from the following list:\n");
+    printf("Choose a scheduler from the following list:\n");
     printf("1. First In First Out (FIFO)\n");
     printf("2. Shortest Job First (SJF)\n");
     printf("3. Round Robin (RR)\n");
     printf("4. Priority Scheduling\n");
     printf("5. Multilevel Queue Scheduling\n");
-    int schedular_choice;
-    scanf("%d", &schedular_choice);
+    int scheduler_choice;
+    scanf("%d", &scheduler_choice);
 
-    switch (schedular_choice)
+    switch (scheduler_choice)
     {
         case 1:
-            printf("\nFirst In First Out (FIFO) Schedular\n");
+            printf("\nFirst In First Out (FIFO) Scheduler\n");
             FIFO_Scheduling(proc, n);
             break;
         case 2:
-            printf("\nShortest Job First (SJF) Schedular\n");
+            printf("\nShortest Job First (SJF) Scheduler\n");
             SJF_Scheduling(proc, n);
             break;
         case 3:
-            printf("\nRound Robin (RR) Schedular\n");
+            printf("\nRound Robin (RR) Scheduler\n");
             printf("Enter the time quantum: ");
             int quantum;
             scanf("%d", &quantum);
             RR_Scheduling(proc, n, quantum);
             break;
         case 4:
-            printf("\nPriority Scheduling Schedular\n");
+            printf("\nPriority Scheduling Scheduler\n");
             Priority_Scheduling(proc, n);
             break;
         case 5:
-            printf("\nMultilevel Queue Scheduling Schedular\n");
+            printf("\nMultilevel Queue Scheduling Scheduler\n");
             MultilevelQueue_Scheduling(proc, n);
             break;
         default:
@@ -214,13 +214,14 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    printf("Would you like to compare the performance of 2 or more schedulars? (y/n): ");
+    printf("Would you like to compare the performance of 2 or more schedulers? (y/n): ");
     char choice;
-    scanf(" %c", &choice);
+    scanf("%c", &choice);
+
+    int num_schedulers;
 
     if (choice == 'y') {
-        int num_schedulers;
-        printf("Enter the number of schedulars you would like to compare: ");
+        printf("Enter the number of schedulers you would like to compare: ");
         scanf("%d", &num_schedulers);
         while (num_schedulers < 2) {
             printf("Please enter a number greater than 1: ");
@@ -228,13 +229,11 @@ int main(int argc, char *argv[]) {
         }  
         printf("\n");
 
-        for (int i = 0; i < num_schedulers; i++){
-            Schedular_Menu();
-        }
-    } 
+        for (int i = 0; i < num_schedulers; i++) {
+            Scheduler_Menu(proc, n);
+        } 
     else {
-        Schedular_Menu();
+        Scheduler_Menu(proc, n);
     }
-
     return 0;
 }
