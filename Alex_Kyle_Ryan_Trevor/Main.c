@@ -85,14 +85,14 @@ void SJF_Scheduling(struct process processes[], int n)
         }
         
         //Calculate the current time after the next process completes
-        printf("Process %d starts at time %d\n", processes[j].pid, current_time);
-        current_time += processes[j].burst_time;
-        printf("Process %d ends at time %d\n", processes[j].pid, current_time);
+        printf("Process %d starts at time %d\n", processes[next].pid, current_time);
+        current_time += processes[next].burst_time;
+        printf("Process %d ends at time %d\n", processes[next].pid, current_time);
 
         //Calculate the process's completion, turnaround, and waiting time
-        processes[j].completion_time = current_time;
-        processes[j].turnaround_time = current_time - processes[j].arrival_time;
-        processes[j].waiting_time = processes[j].turnaround_time - processes[j].burst_time;
+        processes[next].completion_time = current_time;
+        processes[next].turnaround_time = current_time - processes[next].arrival_time;
+        processes[next].waiting_time = processes[next].turnaround_time - processes[next].burst_time;
     }
 }
 
