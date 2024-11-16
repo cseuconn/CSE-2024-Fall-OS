@@ -64,7 +64,7 @@ void FIFO_Scheduling(struct process processes[], int n){
     double average_waiting_time = (double)total_waiting_time / n;
     double average_turnaround_time = (double)total_turnaround_time / n;
     printf("All processes complete after %d\n", current_time);
-    printf("Average waiting time: %.2f\n", average_turnaround_time);
+    printf("Average waiting time: %.2f\n", average_waiting_time);
     printf("Average turnaround time: %.2f\n", average_turnaround_time);
 }
 
@@ -118,7 +118,7 @@ void SJF_Scheduling(struct process processes[], int n)
     double average_waiting_time = (double)total_waiting_time / n;
     double average_turnaround_time = (double)total_turnaround_time / n;
     printf("All processes complete after %d\n", current_time);
-    printf("Average waiting time: %.2f\n", average_turnaround_time);
+    printf("Average waiting time: %.2f\n", average_waing_time);
     printf("Average turnaround time: %.2f\n", average_turnaround_time);
 }
 
