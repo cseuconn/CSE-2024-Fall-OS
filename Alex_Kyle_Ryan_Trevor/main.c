@@ -59,9 +59,9 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    printf("Would you like to compare the performance of 2 or more schedulers? (y/n): ");
+    printf("Would you like to compare the performance of 2 or more schedulers? (y/n):");
     char choice;
-    scanf("%c", &choice);
+    scanf(" %c", &choice);
 
     int num_schedulers;
 
