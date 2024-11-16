@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "scheduler.h"
 
-struct process {
+struct process{
     int pid;
     int arrival_time;
     int burst_time;
