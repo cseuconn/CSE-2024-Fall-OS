@@ -37,7 +37,7 @@ void Scheduler_Menu(struct process proc[], int n)
             break;
         case 5:
             printf("\nMultilevel Queue Scheduling Scheduler\n");
-            MultilevelQueue_Scheduling(proc, n);
+            //MultilevelQueue_Scheduling(proc, n);
             break;
         case 6:
             printf("\nShortest Remaining Time First (SRTCF) Scheduler\n");
@@ -91,10 +91,15 @@ int main(int argc, char *argv[]) {
         printf("\n");
 
         int schedulers[num_schedulers]; 
+        int quantum;
         print_scheduler_menu();
         for (int i = 0; i < num_schedulers; i++) {
             printf("Choose scheduler %d: ", i + 1);
             scanf("%d", &schedulers[i]);
+            if (schedulers[i] == 3) {
+                printf("Enter the time quantum for scheduler %d: ", i + 1);
+                scanf("%d", &quantum);
+            }
         }
 
         for (int i = 0; i < num_schedulers; i++) {
@@ -109,9 +114,6 @@ int main(int argc, char *argv[]) {
                     break;
                 case 3:
                     printf("\nRound Robin (RR) Scheduler\n");
-                    printf("Enter the time quantum: ");
-                    int quantum;
-                    scanf("%d", &quantum);
                     RR_Scheduling(proc, n, quantum);
                     break;
                 case 4:
@@ -120,7 +122,7 @@ int main(int argc, char *argv[]) {
                     break;
                 case 5:
                     printf("\nMultilevel Queue Scheduling Scheduler\n");
-                    MultilevelQueue_Scheduling(proc, n);
+                    //MultilevelQueue_Scheduling(proc, n);
                     break;
                 case 6:
                     printf("\nShortest Remaining Time First (SRTCF) Scheduler\n");

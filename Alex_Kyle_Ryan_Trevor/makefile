@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 OBJ = main.o process.o scheduler.o
-TARGET = Scheduler_App
+TARGET = scheduler_app
 
 all: $(TARGET)
 
@@ -11,8 +11,8 @@ $(TARGET): $(OBJ)
 main.o: main.c process.h scheduler.h
 	$(CC) $(CFLAGS) -c main.c
 
-process.o: process.c process.h
-	$(CC) $(CFLAGS) -c process.c
+process.o: process.h
+	touch process.o
 
 scheduler.o: scheduler.c scheduler.h
 	$(CC) $(CFLAGS) -c scheduler.c
