@@ -10,6 +10,7 @@ void Scheduler_Menu(struct process proc[], int n)
     printf("3. Round Robin (RR)\n");
     printf("4. Priority Scheduling\n");
     printf("5. Multilevel Queue Scheduling\n");
+    printf("6. Shortest Remaining Time First (SRTCF)\n");
     int scheduler_choice;
     scanf("%d", &scheduler_choice);
 
@@ -38,6 +39,10 @@ void Scheduler_Menu(struct process proc[], int n)
             printf("\nMultilevel Queue Scheduling Scheduler\n");
             MultilevelQueue_Scheduling(proc, n);
             break;
+        case 6:
+            printf("\nShortest Remaining Time First (SRTCF) Scheduler\n");
+            SRTCF_Scheduling(proc, n);
+            break;
         default:
             printf("Invalid choice\n");
             break;
@@ -51,6 +56,7 @@ void print_scheduler_menu(){
     printf("3. Round Robin (RR)\n");
     printf("4. Priority Scheduling\n");
     printf("5. Multilevel Queue Scheduling\n");
+    printf("6. Shortest Remaining Time First (SRTCF)\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -115,6 +121,10 @@ int main(int argc, char *argv[]) {
                 case 5:
                     printf("\nMultilevel Queue Scheduling Scheduler\n");
                     MultilevelQueue_Scheduling(proc, n);
+                    break;
+                case 6:
+                    printf("\nShortest Remaining Time First (SRTCF) Scheduler\n");
+                    SRTCF_Scheduling(proc, n);
                     break;
                 default:
                     printf("Invalid choice\n");

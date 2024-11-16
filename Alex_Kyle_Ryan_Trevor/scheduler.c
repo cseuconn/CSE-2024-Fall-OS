@@ -218,3 +218,80 @@ void Priority_Scheduling(struct process processes[], int n)
     printf("Average waiting time: %.2f\n", average_waiting_time);
     printf("Average turnaround time: %.2f\n", average_turnaround_time);
 }
+
+void SRTCF_Scheduling(struct process processes[], int n)
+{
+    // Keep track of total waiting time and total turnaround time for later use
+    int total_waiting_time = 0;
+    int total_turnaround_time = 0;
+
+    // Sort the processes by arrival time
+    sort_by_arrival_time(processes, n);
+
+    // Time starts at 0
+    int current_time = 0;
+
+    // No processes have been completed yet
+    int completed = 0;
+
+    // Run until all processes are done
+    while(completed < n)
+    {
+        int run_index = -1;                         // index of the process that will run at this time
+        int shortest_remaining_time = __INT_MAX__;  // shortest remaining time in processes[] (processes[run_index].remaining_time)
+
+        // Find which process has the shortest remaining time at this point in time
+        for (int i = 0; i < n; i++)
+        {
+            // If the process has arrived and it's not done
+            if ((processes[i].arrival_time <= current_time) && (processes[i].is_completed == 0))
+            {
+                // Check if it has less remaining time than the current shortest
+                if (processes[i].remaining_time < shortest_remaining_time)
+                {
+                    // If so, update the run_index and shortest_remaining_time
+                    run_index = i;
+                    shortest_remaining_time = processes[i].remaining_time;
+                }
+            }
+        }
+
+        // If the run_index is still stuck at -1, then no processes are qualified to run at this time
+        if (run_index == -1)
+        {
+            current_time += 1;
+            printf("CPU idle from %d to %d\n", current_time - 1, current_time);
+            continue;
+        }
+
+        // If this job is just beginning, calculate the waiting_time
+        if (processes[run_index].remaining_time == processes[run_index].burst_time)
+        {
+            processes[run_index].waiting_time = current_time - processes[run_index].arrival_time;
+            total_waiting_time += processes[run_index].waiting_time;
+        }
+
+        // The job at processes[run_index] will run for this time unit, decrement remaining_time accordingly
+        processes[run_index].remaining_time -= 1;
+
+        // Move to the next time unit
+        current_time += 1;
+
+        // Check if the process is done
+        if (processes[run_index].remaining_time == 0)
+        {
+            processes[run_index].completion_time = current_time;
+            processes[run_index].turnaround_time = current_time - processes[run_index].arrival_time;
+            processes[run_index].is_completed = 1;
+            completed += 1;
+            total_turnaround_time += processes[run_index].turnaround_time;
+        }
+    }
+
+    // Calculate average waiting time and turnaround time
+    double average_waiting_time = (double)total_waiting_time / n;
+    double average_turnaround_time = (double)total_turnaround_time / n;
+    printf("All processes complete after %d\n", current_time);
+    printf("Average waiting time: %.2f\n", average_waiting_time);
+    printf("Average turnaround time: %.2f\n", average_turnaround_time);
+}
