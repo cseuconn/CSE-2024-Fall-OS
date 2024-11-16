@@ -82,7 +82,7 @@ void SJF_Scheduling(struct process processes[], int n)
             current_time = processes[i].arrival_time;
         }
         
-        // Find shortest process that has arrived and  not completed
+        // Find shortest process that has arrived and not completed
         int next = -1;
         int j = 0;
         while ((processes[j].arrival_time <= current_time) && (j < n))
