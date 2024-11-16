@@ -20,7 +20,6 @@ void sort_by_arrival_time(struct process processes[], int n){
 
 
 void FIFO_Scheduling(struct process processes[], int n){
-    printf("Test 1 ");
     //Sort the processes by arrival time using insertion sort
     sort_by_arrival_time(processes, n);
 
