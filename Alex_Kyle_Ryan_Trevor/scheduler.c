@@ -18,7 +18,9 @@ void sort_by_arrival_time(struct process processes[], int n){
     }
 }
 
+
 void FIFO_Scheduling(struct process processes[], int n){
+    printf("Test 1 ");
     //Sort the processes by arrival time using insertion sort
     sort_by_arrival_time(processes, n);
 
@@ -49,6 +51,9 @@ void FIFO_Scheduling(struct process processes[], int n){
         // Calculate the processes completion and turnaround time
         processes[i].completion_time = current_time;
         processes[i].turnaround_time = current_time - processes[i].arrival_time;
+
+        processes[i].completion_time = current_time;
+        total_turnaround_time += processes[i].turnaround_time;
     }
 
     double average_waiting_time = (double)total_waiting_time / n;
@@ -109,6 +114,7 @@ void SJF_Scheduling(struct process processes[], int n)
     printf("Average turnaround time: %.2f\n", average_turnaround_time);
 }
 
+
 void RR_Scheduling(struct process processes[], int n, int time_quantum){
     // Sort the processes by arrival time using insertion sort
     sort_by_arrival_time(processes, n);
@@ -127,6 +133,21 @@ void RR_Scheduling(struct process processes[], int n, int time_quantum){
                 // Not all processes are done
                 done = 0;
 
+                 //Handle CPU idle time
+                if(processes[i].arrival_time > current_time){
+                    //Find the earliest arrival time of remaining process
+                    int earliest_arrival = processes[i].arrival_time;
+                    for(int j = 0; j < n; j++){
+                        if (processes[j].remaining_time > 0 && processes[j].arrival_time < earliest_arrival) {
+                            earliest_arrival = processes[j].arrival_time;
+                        }
+                    }
+
+                    // Move current time to the earliest available process
+                    current_time = earliest_arrival;
+                }
+
+
                 // Execute process for the time quantum or remaining time
                 if (processes[i].arrival_time <= current_time){
                     int time_to_execute = processes[i].remaining_time < time_quantum? processes[i].remaining_time:time_quantum;
@@ -144,14 +165,18 @@ void RR_Scheduling(struct process processes[], int n, int time_quantum){
                 }
             }
         }
-
+        
     }while(!done);
-
     // Calculate turnaround and waiting time for each process
+    double total_turnaround_time = 0, total_waiting_time = 0;
     for(int i = 0; i < n; i++){
         processes[i].turnaround_time = processes[i].completion_time - processes[i].arrival_time;
         processes[i].waiting_time = processes[i].turnaround_time - processes[i].burst_time;
+        total_turnaround_time += processes[i].turnaround_time;
+        total_waiting_time += processes[i].waiting_time;
     }
+    printf("Average Turnaround Time: %.2f\n", total_turnaround_time / n);
+    printf("Average Waiting Time: %.2f\n", total_waiting_time / n);
 }
 
 void Priority_Scheduling(struct process processes[], int n)
