@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < num_schedulers; i++) {
             Scheduler_Menu(proc, n);
         } 
+    }
     else {
         Scheduler_Menu(proc, n);
     }
