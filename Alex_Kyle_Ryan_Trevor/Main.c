@@ -46,6 +46,7 @@ void FIFO_Scheduling (struct process processes[], int n){
         //Calculate the current time after the current process completes
         printf("Process %d starts at time %d\n", processes[i].pid, current_time);
         current_time += processes[i].burst_time;
+        processes[next].remaining_time = 0;
         processes[i].is_completed = 1;
         printf("Process %d ends at time %d\n", processes[i].pid, current_time);
 
@@ -87,6 +88,7 @@ void SJF_Scheduling(struct process processes[], int n)
         //Calculate the current time after the next process completes
         printf("Process %d starts at time %d\n", processes[next].pid, current_time);
         current_time += processes[next].burst_time;
+        processes[next].remaining_time = 0;
         processes[next].is_completed = 1;
         printf("Process %d ends at time %d\n", processes[next].pid, current_time);
 
