@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "scheduler.h"
 
-void Scheduler_Menu(proc, n)
+void Scheduler_Menu(struct process proc[], n)
 {
     printf("Choose a scheduler from the following list:\n");
     printf("1. First In First Out (FIFO)\n");
