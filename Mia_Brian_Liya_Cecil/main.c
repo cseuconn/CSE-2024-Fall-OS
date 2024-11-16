@@ -5,6 +5,22 @@
 #include <unistd.h>
 #include <assert.h>
 
+void setup(struct thread_info *jobs, int * job_info)
+{
+    int j = 0;
+    for (int i = 0; i < 10; i = i + 2)
+    {
+        jobs[j].job_ID = i;
+        jobs[j].arrival_time = job_info[i];
+        jobs[j].turnaround_time = -1;
+        jobs[j].completion_time = -1;
+        jobs[j].time_remaining = job_info[i+1];
+        jobs[j].first_run = -1;
+        jobs[j].response_time = -1;
+        j++;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     struct thread_info *job_list = malloc(5 * sizeof(struct thread_info));
@@ -12,7 +28,7 @@ int main(int argc, char *argv[])
     int job_expected_times_sfj[5][2] = {{5, 0}, {18, 8}, {18, 18}, {36, 21}, {30, 39}};
     int job_starter_info[10] = {0, 5, 0, 13, 3, 3, 4, 18, 19, 10};
     
-    //setup(job_list, job_starter_info);
+    setup(job_list, job_starter_info);
 
     printf("Running FIFO tests\n");
     //fifo_in_place(job_list);
