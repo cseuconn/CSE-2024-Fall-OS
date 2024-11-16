@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "scheduler.h"
+#include "process.h"
 
 void Scheduler_Menu(struct process proc[], int n)
 {

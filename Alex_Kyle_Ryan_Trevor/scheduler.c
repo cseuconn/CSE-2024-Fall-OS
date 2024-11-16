@@ -1,16 +1,7 @@
 #include <stdio.h>
 #include "scheduler.h"
+#include "process.h"
 
-struct process{
-    int pid;
-    int arrival_time;
-    int burst_time;
-    int waiting_time;
-    int turnaround_time;
-    int completion_time;
-    int remaining_time;
-    int is_completed;
-};
 
 void sort_by_arrival_time(struct process processes[], int n){
     // Sort the processes by arrival time using insertion sort
