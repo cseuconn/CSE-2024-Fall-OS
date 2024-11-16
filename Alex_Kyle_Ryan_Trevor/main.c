@@ -44,6 +44,15 @@ void Scheduler_Menu(struct process proc[], int n)
     }
 }
 
+void print_scheduler_menu(){
+    printf("Choose a scheduler from the following list:\n");
+    printf("1. First In First Out (FIFO)\n");
+    printf("2. Shortest Job First (SJF)\n");
+    printf("3. Round Robin (RR)\n");
+    printf("4. Priority Scheduling\n");
+    printf("5. Multilevel Queue Scheduling\n");
+}
+
 int main(int argc, char *argv[]) {
     int n;
     printf("Enter the number of processes: ");
@@ -72,12 +81,46 @@ int main(int argc, char *argv[]) {
         while (num_schedulers < 2) {
             printf("Please enter a number greater than 1: ");
             scanf("%d", &num_schedulers);
-        }  
+        }
         printf("\n");
 
+        int schedulers[num_schedulers]; 
+        print_scheduler_menu();
         for (int i = 0; i < num_schedulers; i++) {
-            Scheduler_Menu(proc, n);
-        } 
+            printf("Choose scheduler %d: ", i + 1);
+            scanf("%d", &schedulers[i]);
+        }
+
+        for (int i = 0; i < num_schedulers; i++) {
+            switch (schedulers[i]) {
+                case 1:
+                    printf("\nFirst In First Out (FIFO) Scheduler\n");
+                    FIFO_Scheduling(proc, n);
+                    break;
+                case 2:
+                    printf("\nShortest Job First (SJF) Scheduler\n");
+                    SJF_Scheduling(proc, n);
+                    break;
+                case 3:
+                    printf("\nRound Robin (RR) Scheduler\n");
+                    printf("Enter the time quantum: ");
+                    int quantum;
+                    scanf("%d", &quantum);
+                    RR_Scheduling(proc, n, quantum);
+                    break;
+                case 4:
+                    printf("\nPriority Scheduling Scheduler\n");
+                    Priority_Scheduling(proc, n);
+                    break;
+                case 5:
+                    printf("\nMultilevel Queue Scheduling Scheduler\n");
+                    MultilevelQueue_Scheduling(proc, n);
+                    break;
+                default:
+                    printf("Invalid choice\n");
+                    break;
+            }
+        }
     }
     else {
         Scheduler_Menu(proc, n);
