@@ -1,5 +1,5 @@
 #include "thread.h"
-#include "FIFO.h"
+#include "FIFO.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -29,9 +29,10 @@ int main(int argc, char *argv[])
     int job_starter_info[10] = {0, 5, 0, 13, 3, 3, 4, 18, 19, 10};
     
     setup(job_list, job_starter_info);
-
+    
     printf("Running FIFO tests\n");
-    //fifo_in_place(job_list);
+    fifo_in_place(job_list);
+
     for (int i = 0; i < 5; i++)
     {
         printf("Job %d expected turnaround time: %d, actual turnaround time: %d\n",
@@ -42,6 +43,7 @@ int main(int argc, char *argv[])
 
     printf("Running SFJ tests\n");
     //sjf_function(job_list);
+
     for (int i = 0; i < 5; i++)
     {
         printf("Job %d expected turnaround time: %d, actual turnaround time: %d\n",
