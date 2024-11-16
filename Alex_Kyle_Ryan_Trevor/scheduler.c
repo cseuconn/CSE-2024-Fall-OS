@@ -34,6 +34,8 @@ void FIFO_Scheduling(struct process processes[], int n){
 
     //Start FIFO processes
     int current_time = 0;
+    int total_waiting_time = 0;
+    int total_turnaround_time = 0;
 
     for (int i = 0; i < n; i++) {
         // Wait if the current time is less than the process's arrival time
