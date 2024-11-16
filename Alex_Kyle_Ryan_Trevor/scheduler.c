@@ -2,7 +2,6 @@
 #include "scheduler.h"
 #include "process.h"
 
-
 void sort_by_arrival_time(struct process processes[], int n){
     // Sort the processes by arrival time using insertion sort
     for (int i = 1; i < n; i++) {
