@@ -10,6 +10,7 @@ struct process {
     int completion_time;
     int remaining_time;
     int is_completed;
+    int priority;
 };
 
 #endif // PROCESS_H
