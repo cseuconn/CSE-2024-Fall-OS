@@ -45,7 +45,7 @@ void fifo_in_place(struct thread_info* jobs_array)
             curr_time = job->arrival_time;
         }
 
-         // set the completion time and first run time
+        // set the completion time and first run time
         job->first_run = curr_time;
         job->completion_time = curr_time + job->time_remaining;   
         
@@ -80,7 +80,8 @@ struct thread_info* fifo_not_in_place(struct thread_info* jobs_array)
             curr_time = job->arrival_time;
         }
 
-        // set the completion time
+         // set the completion time and first run time
+        job->first_run = curr_time;
         job->completion_time = curr_time + job->time_remaining;   
 
         // update the current time
