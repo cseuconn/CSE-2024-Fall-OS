@@ -95,6 +95,14 @@ void multiple_choice_menu(struct process proc[], int n){
 
     for (int i = 0; i < num_schedulers; i++) {
         execute_scheduler(proc, n, schedulers[i], quantum_nums[i]);
+        for (int p = 0; p < n; p++)
+        {
+            proc[p].completion_time = 0;
+            proc[p].turnaround_time = 0;
+            proc[p].waiting_time = 0;
+            proc[p].is_completed = 0;
+            proc[p].remaining_time = proc[p].burst_time;
+        }
     }
 }
 
