@@ -396,8 +396,8 @@ void LRTCF_Scheduling(struct process processes[], int n)
     // Run until all processes are done
     while(completed < n)
     {
-        int run_index = -1;                         // index of the process that will run at this time
-        int longest_remaining_time = 0;  // longest remaining time in processes[] (processes[run_index].remaining_time)
+        int run_index = -1;                 // index of the process that will run at this time
+        int longest_remaining_time = 0;     // longest remaining time in processes[] (processes[run_index].remaining_time)
 
         // Find which process has the longest remaining time at this point in time
         for (int i = 0; i < n; i++)
@@ -408,7 +408,7 @@ void LRTCF_Scheduling(struct process processes[], int n)
                 // Check if it has more remaining time than the current longest
                 if (processes[i].remaining_time > longest_remaining_time)
                 {
-                    // We need to update the waiting time for the previous shortest before updating the shortest
+                    // We need to update the waiting time for the previous longest before updating the longest
                     if (run_index != -1)
                     {
                         processes[run_index].waiting_time += 1;
