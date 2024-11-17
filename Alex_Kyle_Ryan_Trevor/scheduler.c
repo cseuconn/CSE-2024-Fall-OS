@@ -85,7 +85,7 @@ void SJF_Scheduling(struct process processes[], int n)
 
         while (!done) {
             if (processes[j].arrival_time > current_time) done = 1;
-            else if ((processes[k].is_completed) || (processes[j].burst_time < lbt)) {
+            else if ((processes[k].is_completed) || ((!processes[j].is_completed) && (processes[j].burst_time < lbt))) {
                 k = j;
                 lbt = processes[k].burst_time;
             }
@@ -207,7 +207,7 @@ void Priority_Scheduling(struct process processes[], int n)
 
         while (!done) {
             if (processes[j].arrival_time > current_time) done = 1;
-            else if ((processes[k].is_completed) || (processes[j].priority < hp)) {
+            else if ((processes[k].is_completed) || ((!processes[j].is_completed) && (processes[j].priority < hp))) {
                 k = j;
                 hp = processes[k].priority;
             }
