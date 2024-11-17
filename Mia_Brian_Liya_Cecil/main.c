@@ -165,8 +165,8 @@ void setup(struct thread_info *jobs, int * job_info)
 int main(int argc, char *argv[])
 {
     struct thread_info *job_list = malloc(5 * sizeof(struct thread_info));
-    int job_expected_times_fifo[5][2] = {{5, 0}, {18, 5}, {18, 18}, {35, 21}, {30, 39}};
-    int job_expected_times_sfj[5][2] = {{5, 0}, {18, 8}, {18, 18}, {36, 21}, {30, 39}};
+    int job_expected_times_fifo[5][2] = {{13, 0}, {18, 13}, {18, 15}, {35, 17}, {30, 20}};
+    int job_expected_times_sfj[5][2] = {{18, 5}, {5, 0}, {18, 15}, {35, 17}, {30, 20}};
     int job_starter_info[10] = {0, 13, 0, 5, 3, 3, 4, 18, 19, 10};
     
     setup(job_list, job_starter_info);
@@ -188,6 +188,11 @@ int main(int argc, char *argv[])
     sjf_scheduler(job_list);
     responsetime(job_list, 5);
     turnaroundtime(job_list, 5);
+
+    // sjf sorts job_list to 2,1,3,4,5 so swap back to 1,2,3,4,5
+    struct thread_info temp = job_list[0];
+    job_list[0] = job_list[1];
+    job_list[1] = temp;
 
     for (int i = 0; i < 5; i++)
     {
