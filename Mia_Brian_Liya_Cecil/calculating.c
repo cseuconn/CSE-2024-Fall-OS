@@ -5,7 +5,7 @@
 // calculate response time
 void responsetime(struct thread_info *jobs, int n){
   for (int i = 0; i < n; i++){
-    jobs[i].response_time = jobs[i].first_run - jobs[i].arrival;
+    jobs[i].response_time = jobs[i].first_run - jobs[i].arrival_time;
   }
 }
 
