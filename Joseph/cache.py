@@ -100,6 +100,18 @@ class LRUCache(Cache):
 class OptimalCache(Cache):
     pass
 
+CACHE_TYPES = [
+    FIFOCache,
+    RandomCache,
+    LRUCache,
+    OptimalCache,
+]
+
+TEST_PATTERNS = [
+    "01201303121",
+    "01201303121012013031210120130312101201303121",
+]
+
 def do_test(cache, size, pattern):
     inst = cache(size)
     for a in pattern:
@@ -112,9 +124,31 @@ def test_cache(cache, size, pattern):
     hr, mr = do_test(cache, size, pattern)
     print(f"{name}({size=}) had a hit rate of {hr:.2f} and a miss rate of {mr:.2f}")
 
+def test_cache_avg(cache, size, pattern, n):
+    name = cache.__name__
+    # print(f"Testing {name}({size=}) with pattern '{pattern}'")
+    total_hr = 0
+    total_mr = 0
+    
+    pattern = [x for x in pattern]
+    for _ in range(n):
+        random.shuffle(pattern)
+        hr, mr = do_test(cache, size, pattern)
+        total_hr += hr
+        total_mr += mr
+    
+    avg_hr = total_hr / n
+    avg_mr = total_mr / n
+    print(f"{name}({size=}) had an average hit rate of {avg_hr:.2f} and a miss rate of {avg_mr:.2f}")
+
 def main():
-    test_cache(FIFOCache, 3, "01201303121")
-    test_cache(RandomCache, 3, "01201303121")
-    test_cache(LRUCache, 3, "01201303121")
+    for ct in CACHE_TYPES:
+        for sz in [2, 4, 8, 16]:
+            tp = list(range(sz+2))*10
+        # for tp in TEST_PATTERNS:
+            test_cache_avg(ct, sz, tp, 25)
+    # test_cache(FIFOCache, 3, "01201303121")
+    # test_cache(RandomCache, 3, "01201303121")
+    # test_cache(LRUCache, 3, "01201303121")
 
 main()
