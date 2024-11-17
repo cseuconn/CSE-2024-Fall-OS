@@ -60,57 +60,60 @@ void FIFO_Scheduling(struct process processes[], int n){
     printf("Average waiting time: %.2f\n", average_waiting_time);
     printf("Average turnaround time: %.2f\n", average_turnaround_time);
 }
-void RR_Scheduling(struct process processes[], int n, int time_quantum) {
-    // Sort the processes by arrival time
+void SJF_Scheduling(struct process processes[], int n)
+{
     sort_by_arrival_time(processes, n);
-
     int current_time = 0;
-    int done;
-
-    do {
-        done = 1; // Assume all processes are done
-
-        for (int i = 0; i < n; i++) {
-            if (processes[i].remaining_time > 0) {
-                done = 0; // There are still processes left to execute
-
-                // Handle idle time by moving to the next process's arrival time
-                if (processes[i].arrival_time > current_time) {
-                    current_time = processes[i].arrival_time;
-                }
-
-                // Execute process for time quantum or remaining time
-                int time_to_execute = processes[i].remaining_time < time_quantum ? processes[i].remaining_time : time_quantum;
-                printf("Process %d executes for %d units from time %d\n", processes[i].pid, time_to_execute, current_time);
-
-                current_time += time_to_execute;
-                processes[i].remaining_time -= time_to_execute;
-
-                if (processes[i].remaining_time == 0) {
-                    processes[i].completion_time = current_time;
-                    printf("Process %d completes at time %d\n", processes[i].pid, current_time);
-                }
-            }
+    int total_waiting_time = 0;
+    int total_turnaround_time = 0;
+    
+    for (int i = 0; i < n; i++)
+    {
+        // Start at soonest possibility
+        if (current_time < processes[i].arrival_time)
+        {
+            printf("CPU idle from %d to %d\n", current_time, processes[i].arrival_time);
+            current_time = processes[i].arrival_time;
         }
-    } while (!done);
+        
+        // Find shortest process that has arrived and not completed
+        int j = 0; // incrementer
+        int k = 0; // next process to execute
+        int sbt = __INT_MAX__;
+        int done = 0;
 
-    // Calculate turnaround and waiting times
-    double total_turnaround_time = 0, total_waiting_time = 0;
-    for (int i = 0; i < n; i++) {
-        processes[i].turnaround_time = processes[i].completion_time - processes[i].arrival_time;
-        processes[i].waiting_time = processes[i].turnaround_time - processes[i].burst_time;
+        while (!done) {
+            if (processes[j].arrival_time > current_time) done = 1;
+            else if ((processes[k].is_completed) || ((!processes[j].is_completed) && (processes[j].burst_time < sbt))) {
+                k = j;
+                sbt = processes[k].burst_time;
+            }
+            j++;
+            if (j >= n) done = 1;
+        }
 
-        printf("Process %d: Turnaround Time = %d, Waiting Time = %d\n",
-               processes[i].pid,
-               processes[i].turnaround_time,
-               processes[i].waiting_time);
+        // Calculate the process's waiting time
+        processes[k].waiting_time = current_time - processes[k].arrival_time;
+        total_waiting_time += processes[k].waiting_time;
+        
+        // Complete the task and caclulate time passed
+        printf("Process %d starts at time %d\n", processes[k].pid, current_time);
+        current_time += processes[k].burst_time;
+        processes[k].remaining_time = 0;
+        processes[k].is_completed = 1;
+        printf("Process %d ends at time %d\n", processes[k].pid, current_time);
 
-        total_turnaround_time += processes[i].turnaround_time;
-        total_waiting_time += processes[i].waiting_time;
+        // Calculate the process's completion and turnaround time
+        processes[k].completion_time = current_time;
+        processes[k].turnaround_time = current_time - processes[k].arrival_time;
+        total_turnaround_time += processes[k].turnaround_time;
     }
-
-    printf("Average Turnaround Time: %.2f\n", total_turnaround_time / n);
-    printf("Average Waiting Time: %.2f\n", total_waiting_time / n);
+    
+    double average_waiting_time = (double)total_waiting_time / n;
+    double average_turnaround_time = (double)total_turnaround_time / n;
+    printf("All processes complete after %d\n", current_time);
+    printf("Average waiting time: %.2f\n", average_waiting_time);
+    printf("Average turnaround time: %.2f\n", average_turnaround_time);
 }
 
 void LJF_Scheduling(struct process processes[], int n)
