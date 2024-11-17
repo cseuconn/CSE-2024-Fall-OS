@@ -8,8 +8,7 @@ void print_scheduler_menu(){
     printf("2. Shortest Job First (SJF)\n");
     printf("3. Round Robin (RR)\n");
     printf("4. Priority Scheduling\n");
-    printf("5. Multilevel Queue Scheduling\n");
-    printf("6. Shortest Remaining Time First (SRTCF)\n");
+    printf("5. Shortest Remaining Time First (SRTCF)\n");
 }
 
 void execute_scheduler(struct process proc[], int n, int scheduler_choice, int quantum){
@@ -36,10 +35,6 @@ void execute_scheduler(struct process proc[], int n, int scheduler_choice, int q
             Priority_Scheduling(proc, n);
             break;
         case 5:
-            printf("\nMultilevel Queue Scheduling Scheduler\n");
-            //MultilevelQueue_Scheduling(proc, n);
-            break;
-        case 6:
             printf("\nShortest Remaining Time First (SRTCF) Scheduler\n");
             SRTCF_Scheduling(proc, n);
             break;
