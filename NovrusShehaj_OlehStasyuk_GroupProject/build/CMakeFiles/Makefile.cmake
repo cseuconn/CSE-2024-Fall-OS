@@ -129,7 +129,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/memory_management_app.dir/DependInfo.cmake"
+  "CMakeFiles/memory_allocator.dir/DependInfo.cmake"
   "CMakeFiles/test_garbage_collector.dir/DependInfo.cmake"
   "CMakeFiles/test_memory_allocator.dir/DependInfo.cmake"
   "CMakeFiles/test_defragmenter.dir/DependInfo.cmake"

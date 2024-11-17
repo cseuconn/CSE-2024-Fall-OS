@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-F
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/memory_management_app.dir/all
+all: CMakeFiles/memory_allocator.dir/all
 all: CMakeFiles/test_garbage_collector.dir/all
 all: CMakeFiles/test_memory_allocator.dir/all
 all: CMakeFiles/test_defragmenter.dir/all
@@ -74,37 +74,37 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/memory_management_app.dir/clean
+clean: CMakeFiles/memory_allocator.dir/clean
 clean: CMakeFiles/test_garbage_collector.dir/clean
 clean: CMakeFiles/test_memory_allocator.dir/clean
 clean: CMakeFiles/test_defragmenter.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/memory_management_app.dir
+# Target rules for target CMakeFiles/memory_allocator.dir
 
 # All Build rule for target.
-CMakeFiles/memory_management_app.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target memory_management_app"
-.PHONY : CMakeFiles/memory_management_app.dir/all
+CMakeFiles/memory_allocator.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_allocator.dir/build.make CMakeFiles/memory_allocator.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_allocator.dir/build.make CMakeFiles/memory_allocator.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target memory_allocator"
+.PHONY : CMakeFiles/memory_allocator.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/memory_management_app.dir/rule: cmake_check_build_system
+CMakeFiles/memory_allocator.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/memory_management_app.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/memory_allocator.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/novrusshehaj/Desktop/Fall24/CSE4300/Project/CSE-2024-Fall-OS/NovrusShehaj_OlehStasyuk_GroupProject/build/CMakeFiles 0
-.PHONY : CMakeFiles/memory_management_app.dir/rule
+.PHONY : CMakeFiles/memory_allocator.dir/rule
 
 # Convenience name for target.
-memory_management_app: CMakeFiles/memory_management_app.dir/rule
-.PHONY : memory_management_app
+memory_allocator: CMakeFiles/memory_allocator.dir/rule
+.PHONY : memory_allocator
 
 # clean rule for target.
-CMakeFiles/memory_management_app.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_management_app.dir/build.make CMakeFiles/memory_management_app.dir/clean
-.PHONY : CMakeFiles/memory_management_app.dir/clean
+CMakeFiles/memory_allocator.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/memory_allocator.dir/build.make CMakeFiles/memory_allocator.dir/clean
+.PHONY : CMakeFiles/memory_allocator.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/test_garbage_collector.dir

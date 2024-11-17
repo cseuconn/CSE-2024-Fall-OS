@@ -9,7 +9,6 @@ include_directories(include)
 
 # Source files
 set(SOURCES
-    src/main.c
     src/memory_allocator.c
     src/garbage_collector.c
     src/defragmenter.c
@@ -19,12 +18,9 @@ set(SOURCES
 set(CMAKE_BUILD_TYPE Debug)
 
 # Add the executable
-add_executable(memory_management_app
+add_executable(memory_allocator
     src/main.c
-    src/memory_allocator.c
-    src/garbage_collector.c
-    src/defragmenter.c
-    src/root_pointers.c
+    ${SOURCES}
 )
 
 # Add tests
@@ -45,6 +41,7 @@ add_executable(test_memory_allocator
     src/root_pointers.c
 )
 
+# Add the necessary source files to the test_defragmenter target
 add_executable(test_defragmenter
     tests/test_defragmenter.c
     src/defragmenter.c

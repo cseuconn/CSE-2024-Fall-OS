@@ -1,6 +1,6 @@
 # CSE-2024-Fall-OS
 
-# Group Project
+# Group Project - Memory Allocation Application
 
 # Team Members: Novrus Shehaj and Oleh Stasyuk
 
@@ -55,14 +55,17 @@ memory-management-project/
   - **garbage_collector.h**: Header file for garbage collection functions.
   - **defragmenter.c**: Implementation of the memory defragmentation functions.
   - **defragmenter.h**: Header file for memory defragmentation functions.
+
 - **tests/**: Unit tests for the project.
   - **test_memory_allocator.c**: Tests for memory allocation functions.
   - **test_garbage_collector.c**: Tests for garbage collection functions.
   - **test_defragmenter.c**: Tests for memory defragmentation functions.
+
 - **include/**: Header files for the project.
   - **memory_allocator.h**: Header file for memory allocation functions.
   - **garbage_collector.h**: Header file for garbage collection functions.
   - **defragmenter.h**: Header file for memory defragmentation functions.
+
 - **docs/**: Documentation for the project.
   - **design_doc.md**: Detailed design document.
   - **api_reference.md**: API reference for the project.
@@ -79,13 +82,14 @@ memory-management-project/
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/memory-management-project.git
-cd memory-management-project
+git clone https://github.com/cseuconn/CSE-2024-Fall-OS.git
+cd NovrusShehaj_OlehStasyuk_GroupProject
 ```
 
 ### Build the Project
-1. Create a build directory:
+1. Remove Current build directory if there is one and create a new build directory:
 ```sh
+rm -rf build
 mkdir build
 cd build
 ```
@@ -104,7 +108,7 @@ make
 
 After building the project, you can run the application:
 ```sh
-./memory-management-project
+./memory_alloocator
 ```
 
 ## Run Tests
@@ -118,6 +122,15 @@ The application demonstrates the usage of the memory allocator, garbage collecto
 
 ### Memory Allocator
 The memory allocator handles dynamic memory allocation and deallocation. It uses a custom heap management algorithm to efficiently allocate memory blocks.
+
+#### Free List Management
+
+The memory allocator uses a free list to manage free memory blocks. This allows for efficient allocation and deallocation of memory. The free list is a linked list of free blocks, and the allocator uses this list to find suitable blocks for allocation requests.
+
+- **add_to_free_list**: Adds a block to the free list.
+- **remove_from_free_list**: Removes a block from the free list.
+- **split_block**: Splits a larger block into two smaller blocks if the remaining space is large enough to hold another block.
+- **coalesce**: Merges adjacent free blocks into a single larger block to reduce fragmentation.
 
 ### Garbage Collector
 The garbage collector automatically reclaims memory that is no longer in use. It uses a mark-and-sweep algorithm to identify and collect garbage.

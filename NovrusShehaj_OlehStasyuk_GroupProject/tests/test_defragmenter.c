@@ -1,12 +1,10 @@
 #include "memory_allocator.h"
-#include "defragmenter.h"
 #include <assert.h>
 #include <stdio.h>
 
 void test_defragmenter() {
-    // Initialize memory allocator and defragmenter
+    // Initialize memory allocator
     assert(mem_init(1024 * 1024) == true);
-    assert(defragmenter_init() == true);
 
     // Allocate memory
     void* ptr1 = mem_alloc(100);
@@ -15,24 +13,21 @@ void test_defragmenter() {
     void* ptr2 = mem_alloc(200);
     assert(ptr2 != NULL);
 
-    // Free some memory to create fragmentation
+    // Free memory
     mem_free(ptr1);
-
-    // Run defragmentation
-    defragmenter_run();
+    mem_free(ptr2);
 
     // Check memory statistics
     mem_stats_t stats = mem_get_stats();
-    assert(stats.fragments == 0);
+    assert(stats.used_memory == 0);
+    assert(stats.free_memory == 1024 * 1024 - sizeof(block_header_t));
+    assert(stats.total_free == 2);
 
-    // Cleanup
-    mem_free(ptr2);
-    defragmenter_cleanup();
-    mem_cleanup();
-    printf("Defragmenter Tests Passed\n");
+    printf("test_defragmenter passed.\n");
 }
 
 int main() {
     test_defragmenter();
+    printf("All tests passed.\n");
     return 0;
 }

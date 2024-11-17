@@ -4,12 +4,14 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+
 // Forward declaration of block_header_t
 typedef struct block_header {
     size_t size;
     bool is_free;
     struct block_header* next;
     struct block_header* prev;
+    struct block_header* next_free; // Pointer to the next free block
 } block_header_t;
 
 // Statistics Structure
@@ -24,6 +26,7 @@ typedef struct {
 
 typedef struct {
     block_header_t* first_block;
+    block_header_t* free_list; // Pointer to the first free block
     mem_stats_t stats; // Add the stats field
     void* memory_pool;
     size_t pool_size;
