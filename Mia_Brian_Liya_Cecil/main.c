@@ -151,7 +151,7 @@ void setup(struct thread_info *jobs, int * job_info)
     int j = 0;
     for (int i = 0; i < 10; i = i + 2)
     {
-        jobs[j].job_ID = i;
+        jobs[j].job_ID = j+1;
         jobs[j].arrival_time = job_info[i];
         jobs[j].turnaround_time = -1;
         jobs[j].completion_time = -1;
