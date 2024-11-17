@@ -191,20 +191,11 @@ void RR_Scheduling(struct process processes[], int n, int time_quantum){
                 // Not all processes are done
                 done = 0;
 
-                 //Handle CPU idle time
+                 // If the process hasn't arrived yet, we go back to the beginning
                 if(processes[i].arrival_time > current_time){
-                    //Find the earliest arrival time of remaining process
-                    int earliest_arrival = processes[i].arrival_time;
-                    for(int j = 0; j < n; j++){
-                        if (processes[j].remaining_time > 0 && processes[j].arrival_time < earliest_arrival) {
-                            earliest_arrival = processes[j].arrival_time;
-                        }
-                    }
-
-                    // Move current time to the earliest available process
-                    current_time = earliest_arrival;
+                    // By resetting i, we go back to the beginning, so processes[0] will run during this quantum
+                    i = 0;
                 }
-
 
                 // Execute process for the time quantum or remaining time
                 if (processes[i].arrival_time <= current_time){
