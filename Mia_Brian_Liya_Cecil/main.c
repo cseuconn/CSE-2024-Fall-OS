@@ -59,6 +59,9 @@ struct thread_info* fifo_not_in_place(struct thread_info* jobs_array)
     int numJobs = 5;
     struct thread_info* results = (struct thread_info*)malloc(numJobs * sizeof(struct thread_info));
 
+    // sort the jobs based on arrival time using a bubble sort
+    sort_arrival_time(jobs_array, numJobs);
+
     int curr_time = 0;
 
     // process the jobs through FIFO
