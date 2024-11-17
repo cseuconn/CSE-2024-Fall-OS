@@ -269,9 +269,22 @@ void SRTCF_Scheduling(struct process processes[], int n)
                 // Check if it has less remaining time than the current shortest
                 if (processes[i].remaining_time < shortest_remaining_time)
                 {
-                    // If so, update the run_index and shortest_remaining_time
+                    // We need to update the waiting time for the previous shortest before updating the shortest
+                    if (run_index != -1)
+                    {
+                        processes[run_index].waiting_time += 1;
+                        total_waiting_time += 1;
+                    }
+
+                    // Update the run_index and shortest_remaining_time
                     run_index = i;
                     shortest_remaining_time = processes[i].remaining_time;
+                }
+                // If not, then it's waiting, so increment the waiting time
+                else
+                {
+                    processes[i].waiting_time += 1;
+                    total_waiting_time += 1;
                 }
             }
         }
@@ -282,13 +295,6 @@ void SRTCF_Scheduling(struct process processes[], int n)
             current_time += 1;
             printf("CPU idle from %d to %d\n", current_time - 1, current_time);
             continue;
-        }
-
-        // If this job is just beginning, calculate the waiting_time
-        if (processes[run_index].remaining_time == processes[run_index].burst_time)
-        {
-            processes[run_index].waiting_time = current_time - processes[run_index].arrival_time;
-            total_waiting_time += processes[run_index].waiting_time;
         }
 
         // The job at processes[run_index] will run for this time unit, decrement remaining_time accordingly
