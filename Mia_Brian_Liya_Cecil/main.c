@@ -19,20 +19,20 @@ void turnaroundtime(struct thread_info *jobs, int n){
 
 // calculate average response time
 double avg_responsetime(struct thread_info *jobs, int n){
-  double total_responsetime = 0;
+  int total_responsetime = 0;
   for (int i = 0; i < n; i++){
-    total_responsetime += jobs[i].response_time;
+    total_responsetime = total_responsetime + jobs[i].response_time;
   }
-  return total_responsetime / n;
+  return (double)total_responsetime / n;
 }
 
 // calculate average turnaround time 
 double avg_turnaroundtime(struct thread_info *jobs, int n){
-  double total_turnaroundtime = 0;
+  int total_turnaroundtime = 0;
   for (int i = 0; i < n; i++){
-    total_turnaroundtime += jobs[i].turnaround_time;
+    total_turnaroundtime = total_turnaroundtime + jobs[i].turnaround_time;
   }
-  return total_turnaroundtime / n;
+  return (double)total_turnaroundtime / n;
 }
 
 // a function that sorts the jobs by arrival time using bubble sort
@@ -183,6 +183,9 @@ int main(int argc, char *argv[])
         printf("Job %d expected response time: %d, actual response time: %d\n\n",
                 (i+1), job_expected_times_fifo[i][1], fifo_results[i].response_time);
     }
+    printf("Average Turnaround Time: %f\n", avg_turnaroundtime(fifo_results, 5));
+    printf("Average Response Time: %f\n\n", avg_responsetime(fifo_results, 5));
+    
 
     printf("Running SFJ tests\n");
     sjf_scheduler(job_list);
@@ -201,6 +204,9 @@ int main(int argc, char *argv[])
         printf("Job %d expected response time: %d, actual response time: %d\n\n",
                 (i+1), job_expected_times_sfj[i][1], job_list[i].response_time);
     }
+    printf("Average Turnaround Time: %f\n", avg_turnaroundtime(job_list, 5));
+    printf("Average Response Time: %f\n\n", avg_responsetime(job_list, 5));
+    
 
     return 0;
 }
