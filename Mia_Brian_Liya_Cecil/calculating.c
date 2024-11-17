@@ -36,7 +36,7 @@ double avg_turnaroundtime(struct thread_info *jobs, int n){
 
 // print table of results for all jobs 
 void print_results_table(struct thread_info *jobs, int n, int type){
-  printf("Job ID\tArrival Time\tJob Runtime\tTurnaround Time\tResponse Time");
+  printf("Job ID\tArrival Time\tCompletion Time\tTurnaround Time\tResponse Time");
   for (int i = 0; i < n; i++){
     printf("%d\t%d\t%d\t%d\t%d\n", jobs[i].job_ID, jobs[i].arrival_time, jobs[i].completion_time, jobs[i].turnaround_time, jobs[i].response_time);
   }
