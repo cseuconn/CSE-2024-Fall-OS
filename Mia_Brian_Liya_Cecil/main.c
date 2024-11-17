@@ -179,9 +179,9 @@ int main(int argc, char *argv[])
     for (int i = 0; i < 5; i++)
     {
         printf("Job %d expected turnaround time: %d, actual turnaround time: %d\n",
-                i, job_expected_times_fifo[i][0], fifo_results[i].turnaround_time);
+                (i+1), job_expected_times_fifo[i][0], fifo_results[i].turnaround_time);
         printf("Job %d expected response time: %d, actual response time: %d\n\n",
-                i, job_expected_times_fifo[i][1], fifo_results[i].response_time);
+                (i+1), job_expected_times_fifo[i][1], fifo_results[i].response_time);
     }
 
     printf("Running SFJ tests\n");
@@ -192,9 +192,9 @@ int main(int argc, char *argv[])
     for (int i = 0; i < 5; i++)
     {
         printf("Job %d expected turnaround time: %d, actual turnaround time: %d\n",
-                i, job_expected_times_sfj[i][0], job_list[i].turnaround_time);
+                (i+1), job_expected_times_sfj[i][0], job_list[i].turnaround_time);
         printf("Job %d expected response time: %d, actual response time: %d\n\n",
-                i, job_expected_times_sfj[i][1], job_list[i].response_time);
+                (i+1), job_expected_times_sfj[i][1], job_list[i].response_time);
     }
 
     return 0;
