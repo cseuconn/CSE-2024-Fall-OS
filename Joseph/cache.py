@@ -2,19 +2,13 @@ from collections import deque
 import random
 
 DEBUG = False
-def dbg(*args, **kwargs):
+def dbg(msg):
     if DEBUG:
-        print(*args, **kwargs)
+        print(msg)
 
 class Cache:
     def __init__(self, cache_size):
         self._cache_size = cache_size
-        self._accesses = 0
-        self._hits = 0
-        self._misses = 0
-        self.reset()
-    
-    def reset(self):
         self._accesses = 0
         self._hits = 0
         self._misses = 0
