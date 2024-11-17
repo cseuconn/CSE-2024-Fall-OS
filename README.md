@@ -1,4 +1,4 @@
-# CSE-2024-Fall-05
+# CSE-2024-Fall-OS
 ## Simple Operating System Implementation
 This project implements basic operating system components including process management, memory management, synchronization primitives (mutexes and semaphores), and a basic filesystem. It's designed as an educational tool to demonstrate core OS concepts.
 ### Environment Requirements
