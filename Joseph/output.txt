@@ -1,0 +1,12 @@
+Testing FIFOCache(size=3) with pattern '01201303121'
+FIFOCache(size=3) had a hit rate of 0.36 and a miss rate of 0.64
+Testing RandomCache(size=3) with pattern '01201303121'
+RandomCache(size=3) had a hit rate of 0.45 and a miss rate of 0.55
+Testing LRUCache(size=3) with pattern '01201303121'
+LRUCache(size=3) had a hit rate of 0.55 and a miss rate of 0.45
+Testing FIFOCache(size=3) with pattern '01201303121012013031210120130312101201303121'
+FIFOCache(size=3) had a hit rate of 0.57 and a miss rate of 0.43
+Testing RandomCache(size=3) with pattern '01201303121012013031210120130312101201303121'
+RandomCache(size=3) had a hit rate of 0.59 and a miss rate of 0.41
+Testing LRUCache(size=3) with pattern '01201303121012013031210120130312101201303121'
+LRUCache(size=3) had a hit rate of 0.68 and a miss rate of 0.32
