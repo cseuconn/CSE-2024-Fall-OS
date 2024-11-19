@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "MLTable": "yaml",
+        "root_pointers.h": "c"
+    }
+}

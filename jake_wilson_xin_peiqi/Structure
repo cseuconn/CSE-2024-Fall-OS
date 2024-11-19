@@ -1,0 +1,70 @@
+simpleOS/
+├── include/                   # Header files
+│   ├── kernel/
+│   │   ├── process.h          # Process management definitions
+│   │   ├── memory.h           # Memory management definitions
+│   │   ├── filesystem.h       # File system definitions
+│   │   └── sync.h             # Synchronization primitives
+│   └── common/
+│       ├── types.h           # Common type definitions
+│       └── list.h            # Generic list implementation
+│
+├── kernel/
+│   ├── process/              # Process Management (Team Member 1)
+│   │   ├── process.c         # Process control and PCB management
+│   │   ├── scheduler.c       # Process scheduling implementation
+│   │   └── context.c         # Context switching
+│   │
+│   ├── memory/              # Memory Management (Team Member 2)
+│   │   ├── vmm.c            # Virtual memory manager
+│   │   ├── pmm.c            # Physical memory manager
+│   │   ├── paging.c         # Page table management
+│   │   └── heap.c           # Kernel heap management
+│   │
+│   ├── filesystem/          # File System (Team Member 3)
+│   │   ├── fs.c             # Core file system operations
+│   │   ├── inode.c          # Inode management
+│   │   ├── buffer.c         # Buffer cache
+│   │   └── file.c           # File operations
+│   │
+│   └── sync/                # Synchronization (Team Member 4)
+│       ├── mutex.c          # Mutex implementation
+│       ├── semaphore.c      # Semaphore implementation
+│       └── condition.c      # Condition variables
+│
+├── tests/                   # Test Programs
+│   ├── process_test/
+│   │   ├── create_test.c    # Test process creation
+│   │   └── sched_test.c     # Test scheduler
+│   │
+│   ├── memory_test/
+│   │   ├── alloc_test.c     # Test memory allocation
+│   │   └── page_test.c      # Test paging
+│   │
+│   ├── fs_test/
+│   │   ├── file_test.c      # Test file operations
+│   │   └── dir_test.c       # Test directory operations
+│   │
+│   └── sync_test/
+│       ├── mutex_test.c     # Test mutex operations
+│       └── sem_test.c       # Test semaphore operations
+│
+├── lib/                     # Common Library Functions
+│   ├── list.c               # List implementation
+│   ├── string.c             # String operations
+│   └── bitmap.c             # Bitmap operations
+│
+├── docs/                    # Documentation
+│   ├── process.md           # Process management docs
+│   ├── memory.md            # Memory management docs
+│   ├── filesystem.md        # File system docs
+│   └── sync.md              # Synchronization docs
+│
+├── scripts/                 # Build and Test Scripts
+│   ├── build.sh             # Build script
+│   ├── test.sh              # Test runner
+│   └── clean.sh             # Cleanup script
+│
+├── Makefile                 # Main build system
+├── README.md                # Project documentation
+└── .gitignore               # Git ignore file
