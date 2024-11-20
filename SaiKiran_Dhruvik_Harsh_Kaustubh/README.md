@@ -1,14 +1,4 @@
-# Interactive File Management System
-> An Operating System Group Project - CSE 5305
-
-### Team Members
-
-1. Sai Kiran Belana
-2. Dhruvik Patel
-3. Harsh Patel
-4. Kaustubh Adhav
-
-
+# OS-GroupProject
 
 ## File System using ImGUI
 
@@ -78,6 +68,16 @@
 
 ### Test Screenshots:
 
-![image 1](./images/final_UI.png)
+![image 1](./Output_ScreenShots/final_UI.png)
 
-![image 2](./images/final_exec.png)
+![image 2](./Output_ScreenShots/final_exec.png)
+
+
+### Terminal Based Test application 
+
+Compilation and running steps:
+
+    ```bash
+    g++ tui.cpp -o tui 
+    ./tui
+    ```
