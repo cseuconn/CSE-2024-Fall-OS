@@ -70,11 +70,11 @@ int main() {
     ImFont* font = io.Fonts->AddFontDefault();
 
     if (font) {
-        font->Scale = 2.4f;  // Scale font by 1.5x
+        font->Scale = 1.5f;  // Scale font by 1.5x
     }
 
     ImFont* largeFont = io.Fonts->AddFontDefault();
-    largeFont->Scale = 2.8f; // Scale default font to be larger
+    largeFont->Scale = 2.0f; // Scale default font to be larger
 
     // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -289,7 +289,7 @@ int main() {
              struct stat info = get_file_info(filePath);
             dirContents.clear();
 
-            if (info.st_size == 0) {
+            if (info.st_size == -1) {
                 dirContents.append("File does not exist: ");
             } else {
                 // fill the dirContents with the file info
@@ -298,7 +298,10 @@ int main() {
                 dirContents.append("\nSize: ");
                 dirContents.append(std::to_string(info.st_size));
                 dirContents.append(" bytes\nPermissions: ");
-                dirContents.append(std::to_string(info.st_mode & 0777));
+                // Display permissions in octal format
+                char permissions_tmp[8];
+                snprintf(permissions_tmp, sizeof(permissions_tmp), "%o", (info.st_mode & 0777));
+                dirContents.append(permissions_tmp);
                 dirContents.append("\nLast modified: ");
                 dirContents.append(ctime(&info.st_mtime));
                 dirContents.append("Last accessed: ");
