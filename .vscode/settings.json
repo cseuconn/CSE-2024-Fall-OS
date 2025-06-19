@@ -59,5 +59,6 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "scheduler.h": "c"
-  }
+  },
+  "cmake.ignoreCMakeListsMissing": true
 }
